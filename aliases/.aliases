@@ -39,4 +39,4 @@ alias fzf='rg --hidden --files --ignore-file ~/.gitignore | fzf'
 #alias fzy='rg --hidden --files --ignore-file ~/.gitignore | fzy'
 
 # Package Management
-alias update='~/.dotfiles/scripts/update.sh'
+alias update='~/dotfiles-v3/update.sh'
