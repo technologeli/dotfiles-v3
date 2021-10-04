@@ -1,5 +1,4 @@
 {
-    "editor.fontFamily": "'FiraCode Nerd Font Mono', 'Droid Sans Mono', 'monospace', monospace, 'Droid Sans Fallback'",
     "explorer.confirmDragAndDrop": false,
     "editor.foldingHighlight": false,
     "editor.occurrencesHighlight": false,
@@ -31,8 +30,8 @@
     "editor.suggest.preview": true,
     "explorer.autoReveal": false,
     "vim.foldfix": true,
-    "workbench.colorTheme": "Gruvbox Material Dark",
     "zenMode.hideLineNumbers": false,
     "zenMode.hideTabs": false,
     "vim.enableNeovim": true,
+    "editor.fontFamily": "'FiraCode Nerd Font Mono', 'Fira Code', 'Droid Sans Mono', 'Droid Sans Fallback', Menlo, Monaco, 'Courier New', monospace, 'monospace'",
 }
