@@ -1,6 +1,3 @@
-# ~/.aliases
-# https://github.com/technologeli/dotfiles-v2
-
 # Changing ls to exa.
 alias ls='exa -lah --color=always --group-directories-first --time-style=long-iso'
 alias ld='exa -laD --color=always --group-directories-first --time-style=long-iso'

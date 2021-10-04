@@ -1,6 +1,3 @@
-# ~/.bashrc
-# https://github.com/technologeli/dotfiles-v2
-
 # Tip: You can use the syntax above to avoid long if-statements.
 # [[ condition ]] && execution
 

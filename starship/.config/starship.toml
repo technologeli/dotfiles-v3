@@ -1,7 +1,3 @@
-# ~/.config/starship.toml
-# https://github.com/technologeli/dotfiles-v2
-# https://starship.rs/
-
 [character]
 success_symbol = '[❯❯❯](bold green)'
 error_symbol = '[❯❯❯](bold red)'

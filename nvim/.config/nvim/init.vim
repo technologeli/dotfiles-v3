@@ -1,5 +1,3 @@
-" ~/.config/nvim/init.vim
-" https://github.com/technologeli/dotfiles-v2
 set tabstop=2 softtabstop=2
 set shiftwidth=2
 set expandtab
