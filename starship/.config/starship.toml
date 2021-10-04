@@ -1,0 +1,33 @@
+# ~/.config/starship.toml
+# https://github.com/technologeli/dotfiles-v2
+# https://starship.rs/
+
+[character]
+success_symbol = '[❯❯❯](bold green)'
+error_symbol = '[❯❯❯](bold red)'
+
+[cmd_duration]
+min_time = 1000
+
+[directory]
+style = 'purple'
+
+[git_branch]
+style = 'purple'
+[git_status]
+style = 'red'
+
+[hostname]
+ssh_only = false
+format = '[$hostname](cyan) '
+trim_at = '.local'
+
+[shell]
+disabled = false
+bash_indicator = '[BASH](bright-black)'
+fish_indicator = '[FISH](blue)'
+zsh_indicator = '[ZSH](purple)'
+format = '\[$indicator\] '
+
+[python]
+symbol = "Python "

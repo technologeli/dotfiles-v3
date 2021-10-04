@@ -1,0 +1,38 @@
+{
+    "editor.fontFamily": "'FiraCode Nerd Font Mono', 'Droid Sans Mono', 'monospace', monospace, 'Droid Sans Fallback'",
+    "explorer.confirmDragAndDrop": false,
+    "editor.foldingHighlight": false,
+    "editor.occurrencesHighlight": false,
+    "editor.fontSize": 20,
+    "javascript.preferences.quoteStyle": "single",
+    "typescript.preferences.quoteStyle": "single",
+    "editor.lineNumbers": "relative",
+    "workbench.iconTheme": "material-icon-theme",
+    "editor.tabSize": 2,
+    "prettier.jsxSingleQuote": true,
+    "prettier.singleQuote": true,
+    "[typescriptreact]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[typescript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "editor.formatOnSave": true,
+    "workbench.editor.limit.value": 3,
+    "workbench.editor.limit.perEditorGroup": true,
+    "workbench.editor.limit.enabled": true,
+    "explorer.openEditors.sortOrder": "alphabetical",
+    "files.exclude": {
+        "**/node_modules": true
+    },
+    "editor.bracketPairColorization.enabled": true,
+    "editor.minimap.enabled": false,
+    "editor.cursorBlinking": "solid",
+    "editor.suggest.preview": true,
+    "explorer.autoReveal": false,
+    "vim.foldfix": true,
+    "workbench.colorTheme": "Gruvbox Material Dark",
+    "zenMode.hideLineNumbers": false,
+    "zenMode.hideTabs": false,
+    "vim.enableNeovim": true,
+}
