@@ -1,0 +1,4 @@
+vscode/.config/VSCodium/
+
+!vscode/.config/VSCodium/Users/settings.json
+!vscode/.config/VSCodium/Users/keybindings.json
