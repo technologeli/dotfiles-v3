@@ -20,6 +20,7 @@ set signcolumn=yes
 set mouse=a
 set termguicolors
 set cursorline
+set formatoptions-=cro
 
 call plug#begin('~/.local/share/nvim/plugged')
 
@@ -47,6 +48,7 @@ Plug 'sbdchd/neoformat'
 " Git
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
+Plug 'stsewd/fzf-checkout.vim'
 
 call plug#end()
 
@@ -55,8 +57,17 @@ colorscheme onedark
 highlight Normal guibg=none
 
 let g:lightline = {
-    \ 'colorscheme': 'onedark'
-    \ }
+  \ 'colorscheme': 'onedark',
+  \ 'active': {
+  \   'left': [ [ 'mode', 'paste' ],
+  \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ],
+  \   'right': [ ['lineinfo'],
+  \              [ 'fileencoding', 'filetype' ] ]
+  \ },
+  \ 'component_function': {
+  \   'gitbranch': 'FugitiveHead'
+  \ },
+  \ }
 
 " LSP
 let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy']
@@ -67,7 +78,7 @@ local cmp = require'cmp'
 
 cmp.setup({
   snippet = {
-      expand = function(args) end,
+    expand = function(args) end,
   },
   mapping = {
     ['<C-d>'] = cmp.mapping.scroll_docs(-4),
@@ -86,7 +97,7 @@ cmp.setup({
   confirmation = {
     get_commit_characters = function(commit_characters)
       return vim.tbl_filter(function(char)
-        return char ~= ',' and char ~= '('
+        return char ~= ',' and char ~= '(' and char ~= '.'
       end, commit_characters)
     end
   }
@@ -147,8 +158,54 @@ nnoremap <leader>j  <cmd>lprev<cr>zz
 nnoremap <C-q>      <cmd>call ToggleQFList(1)<cr>
 nnoremap <leader>q  <cmd>call ToggleQFList(0)<cr>
 
+" Definitions
 nnoremap <leader>d <cmd>lua vim.lsp.buf.definition()<cr>
 nnoremap <leader>b <C-^>
+
+" Default Mappings
+" <C-x> open in a hsplit
+" <C-v> open in a vsplit
+" <C-t> open in a new tab
+
+" Telescope
+nnoremap <leader>ps <cmd>lua require('telescope.builtin').grep_string({search=vim.fn.input("Grep For > ")})<cr>
+nnoremap <C-p>      <cmd>lua require('telescope.builtin').git_files()<cr>
+nnoremap <leader>f  <cmd>lua require('telescope.builtin').find_files({hidden=true})<cr>
+nnoremap <C-f>      <cmd>lua require('telescope.builtin').find_files({hidden=true, search_dirs={"~/dotfiles-v3", "~/school", "~/work", "~/personal"}})<cr>
+nnoremap <leader>.  <cmd>lua require('telescope.builtin').find_files({hidden=true, search_dirs={"~/dotfiles-v3"}})<cr>
+nnoremap <C-b>      <cmd>lua require('telescope.builtin').buffers()<cr>
+
+" Fugitive
+nnoremap <leader>gs <cmd>Git<cr>
+nnoremap <leader>gc <cmd>GCheckout<cr>
+" Merge helpers
+nnoremap <leader>gf <cmd>diffget //2<cr>
+nnoremap <leader>gj <cmd>diffget //3<cr>
+
+" Yank to end of line
+nnoremap Y y$
+
+" Keep cursor on same line when searching/Jing
+nnoremap n nzzzv
+nnoremap N Nzzzv
+nnoremap J mzJ`z
+
+" Undo Break Points
+" Character can be anything
+inoremap , ,<C-g>u
+inoremap . .<C-g>u
+
+" Jumplist mutations (CTRL-O and CTRL-I)
+nnoremap <expr> k (v:count > 5 ? "m'" . v:count : "") . 'k'
+nnoremap <expr> j (v:count > 5 ? "m'" . v:count : "") . 'j'
+
+" Moving text
+vnoremap J :m '>+1<CR>gv=gv
+vnoremap K :m '<-2<CR>gv=gv
+inoremap <C-j> <esc>:m .+1<CR>==a
+inoremap <C-k> <esc>:m .-2<CR>==a
+nnoremap <leader>j :m .+1<CR>==
+nnoremap <leader>k :m .-2<CR>==
 
 let g:qfl = 0
 let g:qfg = 0
@@ -210,21 +267,6 @@ require('telescope').setup{
    }
 }
 EOF
-
-" Default Mappings
-" <C-x> open in a hsplit
-" <C-v> open in a vsplit
-" <C-t> open in a new tab
-
-" Use telescope for search queries, git projects, working directories, general
-" directories, dotfiles, and buffers.
-nnoremap <leader>ps <cmd>lua require('telescope.builtin').grep_string({search=vim.fn.input("Grep For > ")})<cr>
-nnoremap <C-p>      <cmd>lua require('telescope.builtin').git_files()<cr>
-nnoremap <leader>f  <cmd>lua require('telescope.builtin').find_files({hidden=true})<cr>
-nnoremap <C-f>      <cmd>lua require('telescope.builtin').find_files({hidden=true, search_dirs={"~/.dotfiles", "~/school", "~/work", "~/personal"}})<cr>
-nnoremap <leader>.  <cmd>lua require('telescope.builtin').find_files({hidden=true, search_dirs={"~/.dotfiles"}})<cr>
-nnoremap <C-b>      <cmd>lua require('telescope.builtin').buffers()<cr>
-"nnoremap <leader>b  <cmd>lua require('telescope.builtin').buffers()<cr>
 
 lua << EOF
 
