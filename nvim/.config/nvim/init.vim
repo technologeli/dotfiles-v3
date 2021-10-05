@@ -32,6 +32,8 @@ Plug 'neovim/nvim-lspconfig'
 Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/nvim-cmp'
+Plug 'ray-x/lsp_signature.nvim'
+
 "Plug 'nvim-lua/completion-nvim'
 
 " Telescope
@@ -57,8 +59,6 @@ let g:lightline = {
     \ }
 
 " LSP
-" This prevents it from instantly replacing because that's annoying
-set completeopt=menu,menuone,noinsert,preview
 let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy']
 lua << EOF
 
@@ -74,49 +74,37 @@ cmp.setup({
     ['<C-f>'] = cmp.mapping.scroll_docs(4),
     ['<C-Space>'] = cmp.mapping.complete(),
     ['<C-e>'] = cmp.mapping.close(),
-    -- ['<CR>'] = cmp.mapping.confirm({ select = false }),
     ['<Tab>'] = cmp.mapping(cmp.mapping.select_next_item()),
+    ['<S-Tab>'] = cmp.mapping(cmp.mapping.select_prev_item()),
   },
   sources = {
     { name = 'nvim_lsp' },
-
-    -- For vsnip user.
-    -- { name = 'vsnip' },
-
-    -- For luasnip user.
-    -- { name = 'luasnip' },
-
-    -- For ultisnips user.
-    -- { name = 'ultisnips' },
-
-    -- { name = 'buffer' },
   },
   completion = {
-    completeopt = 'menu,menuone,noinsert',
+    completeopt = 'menu,menuone,noinsert,preview',
+  },
+  confirmation = {
+    get_commit_characters = function(commit_characters)
+      return vim.tbl_filter(function(char)
+        return char ~= ',' and char ~= '('
+      end, commit_characters)
+    end
   }
 })
 
 -- Setup lspconfig.
 require('lspconfig')['tsserver'].setup {
+  on_attach = function(client, bufnr) require'lsp_signature'.on_attach() end,
   capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
 }
---local function preview_location_callback(_, result)
---  if result == nil or vim.tbl_isempty(result) then
---    return nil
---  end
---  vim.lsp.util.preview_location(result[1])
---end
---
---function PeekDefinition()
---  local params = vim.lsp.util.make_position_params()
---  return vim.lsp.buf_request(0, 'textDocument/definition', params, preview_location_callback)
---end
 
 require('lspconfig')['pyright'].setup {
+  on_attach = function(client, bufnr) require'lsp_signature'.on_attach() end,
   capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
 }
 
 require('lspconfig')['bashls'].setup {
+  on_attach = function(client, bufnr) require'lsp_signature'.on_attach() end,
   capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
 }
 
@@ -237,6 +225,7 @@ nnoremap <C-f>      <cmd>lua require('telescope.builtin').find_files({hidden=tru
 nnoremap <leader>.  <cmd>lua require('telescope.builtin').find_files({hidden=true, search_dirs={"~/.dotfiles"}})<cr>
 nnoremap <C-b>      <cmd>lua require('telescope.builtin').buffers()<cr>
 "nnoremap <leader>b  <cmd>lua require('telescope.builtin').buffers()<cr>
+
 lua << EOF
 
 --[[
