@@ -50,6 +50,9 @@ Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 Plug 'stsewd/fzf-checkout.vim'
 
+" Colors
+Plug 'ap/vim-css-color'
+
 call plug#end()
 
 " Theming
