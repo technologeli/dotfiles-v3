@@ -33,7 +33,7 @@ Plug 'neovim/nvim-lspconfig'
 Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/nvim-cmp'
-Plug 'ray-x/lsp_signature.nvim'
+"Plug 'ray-x/lsp_signature.nvim'
 
 "Plug 'nvim-lua/completion-nvim'
 
@@ -106,28 +106,68 @@ cmp.setup({
   }
 })
 
+local function on_attach(client, bufnr)
+  -- require'lsp_signature'.on_attach()
+end
+
+local capabilities = require'cmp_nvim_lsp'.update_capabilities(vim.lsp.protocol.make_client_capabilities())
 -- Setup lspconfig.
-require('lspconfig')['tsserver'].setup {
-  on_attach = function(client, bufnr) require'lsp_signature'.on_attach() end,
-  capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+require'lspconfig'.tsserver.setup {
+  capabilities = capabilities
 }
 
-require('lspconfig')['pyright'].setup {
-  on_attach = function(client, bufnr) require'lsp_signature'.on_attach() end,
-  capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+require'lspconfig'.pyright.setup {
+  capabilities = capabilities
 }
 
-require('lspconfig')['bashls'].setup {
-  on_attach = function(client, bufnr) require'lsp_signature'.on_attach() end,
-  capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+require'lspconfig'.bashls.setup {
+  capabilities = capabilities
 }
+
+capabilities.textDocument.completion.completionItem.snippedSupport = true
+require'lspconfig'.cssls.setup {
+  capabilities = capabilities
+}
+
+-- lua only on linux
+  local system_name = "Linux"
+  local sumneko_root_path = "/home/eli/.sources/lua-language-server"
+  local sumneko_binary = sumneko_root_path.."/bin/"..system_name.."/lua-language-server"
+  require'lspconfig'.sumneko_lua.setup {
+    cmd = {sumneko_binary, "-E", sumneko_root_path .. "/main.lua"};
+    settings = {
+      Lua = {
+        runtime = {
+          -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
+          version = 'LuaJIT',
+          -- Setup your lua path
+          path = vim.split(package.path, ';'),
+        },
+        diagnostics = {
+          -- Get the language server to recognize the `vim` global
+          globals = {'vim'},
+        },
+        workspace = {
+          -- Make the server aware of Neovim runtime files
+          library = {
+            [vim.fn.expand('$VIMRUNTIME/lua')] = true,
+            [vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true,
+          },
+        },
+        -- Do not send telemetry data containing a randomized but unique identifier
+        telemetry = {
+          enable = false,
+        },
+      },
+    },
+  }
 
 EOF
 
 " neoformat
 augroup fmt
   autocmd!
-  autocmd BufWritePre * undojoin | Neoformat
+  autocmd BufWritePre * Neoformat
 augroup END
 " tabs for different languages
 augroup langs

@@ -1,0 +1,168 @@
+# Terminal
+super + Return
+  alacritty
+
+# Applications
+# b: firefox
+# d: discord
+# s: spotify
+# o: obs
+# k: keepassxc
+# t: thunar
+# v: virtualbox
+# c: codium
+# l: lutris
+# g: steam
+
+# Main Apps
+super + a; {b,d,s,k}
+  {firefox,discord,spotify,keepassxc}
+# Games
+super + a; {l,g}
+  {lutris,steam}
+# Other
+super + a; {o,t,v,c}
+  {obs,thunar,virtualbox,codium}
+
+# Launcher
+super + @space
+  rofi -show drun
+super + ctrl + @space
+  rofi -show run
+super + r
+  rofi -combi-modi ssh#window -show combi
+super + Tab
+  rofi -combi-modi ssh#window -show combi
+alt + Tab
+  rofi -combi-modi ssh#window -show combi
+
+# Toggle polybar
+super + e
+  polybar-msg cmd toggle
+
+# Reload sxhkd
+super + ctrl + r
+  pkill -USR1 -x sxhkd
+
+# Quit/restart bspwm
+super + shift + {q,r}
+  bspc {quit,wm -r}
+
+# Close and kill
+super + {_,shift + }w
+  bspc node -{c,k}
+
+# Change keyboard layout
+super + z
+  ~/dotfiles-v3/layout-switch.sh
+
+super + Escape; {s,r,l,h}
+  {systemctl poweroff,systemctl reboot,light-locker-command -l,systemctl suspend}
+
+# Player Controls
+XF86AudioMute
+  ~/dotfiles-v3/toggle-mute.sh
+
+XF86AudioLowerVolume
+  ~/dotfiles-v3/change-volume.sh -5%
+
+XF86AudioRaiseVolume
+  ~/dotfiles-v3/change-volume.sh +5%
+
+XF86AudioPlay
+  playerctl play-pause
+
+shift + XF86AudioPlay
+  playerctl play-pause -p spotify
+
+ctrl + XF86AudioPlay
+  playerctl play-pause -p firefox
+
+XF86AudioStop
+  playerctl stop
+
+XF86AudioNext
+  playerctl next
+
+XF86AudioPrev
+  playerctl previous
+
+# Alternate between the tiled and monocle layout
+super + m
+  bspc desktop -l next
+
+# Send the newest marked node to the newest preselected node
+super + y
+  bspc node newest.marked.local -n newest.!automatic.local
+
+# Set the window state
+super + {t,s,f}
+  bspc node -t {tiled,floating,fullscreen}
+
+# Set the node flags
+super + ctrl + {m,x,y,z}
+  bspc node -g {marked,locked,sticky,private}
+
+# Focus the node in the given direction
+super + {_,shift + }{h,j,k,l}
+  bspc node -{f,s} {west,south,north,east}
+
+# Focus the node for the given path jump
+super + {p,b,comma,period}
+  bspc node -f @{parent,brother,first,second}
+
+# focus the next/previous window in the current desktop
+super + {_,shift + }c
+  bspc node -f {next,prev}.local.!hidden.window
+
+# focus the next/previous desktop in the current monitor
+super + bracket{left,right}
+  bspc desktop -f {prev,next}.local
+super + {Prior,Next}
+  bspc desktop -f {prev,next}.local
+
+# focus the older or newer node in the focus history
+super + {o,i}
+  bspc wm -h off; \
+  bspc node {older,newer} -f; \
+  bspc wm -h on
+
+# focus or send to the given desktop
+super + {_,shift + }{1-9,0}
+  bspc {desktop -f,node -d} '^{1-9,10}'
+
+#
+# preselect
+#
+
+# preselect the direction
+super + ctrl + {h,j,k,l}
+  bspc node -p {west,south,north,east}
+
+# preselect the ratio
+super + ctrl + {1-9}
+  bspc node -o 0.{1-9}
+
+# cancel the preselection for the focused node
+super + ctrl + space
+  bspc node -p cancel
+
+# cancel the preselection for the focused desktop
+super + ctrl + shift + space
+  bspc query -N -d | xargs -I id -n 1 bspc node id -p cancel
+
+#
+# move/resize
+#
+
+# expand a window by moving one of its side outward
+super + alt + {h,j,k,l}
+  bspc node -z {left -20 0,bottom 0 20,top 0 -20,right 20 0}
+
+# contract a window by moving one of its side inward
+super + alt + shift + {h,j,k,l}
+  bspc node -z {right -20 0,top 0 20,bottom 0 -20,left 20 0}
+
+# move a floating window
+super + {Left,Down,Up,Right}
+  bspc node -v {-20 0,0 20,0 -20,20 0}

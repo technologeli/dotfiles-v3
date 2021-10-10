@@ -1,7 +1,8 @@
 # Changing ls to exa.
-alias ls='exa -lah --color=always --group-directories-first --time-style=long-iso'
+alias ls='exa -a --color=always --group-directories-first'
+alias ll='exa -lah --color=always --group-directories-first --time-style=long-iso'
 alias ld='exa -laD --color=always --group-directories-first --time-style=long-iso'
-alias l.='exa -lah | egrep "^\."'
+alias l.='exa -lah --color=always --group-directories-first --time-style=long-iso | egrep "^\."'
 
 # Add color to grep.
 alias grep='grep --color=always'
