@@ -26,15 +26,15 @@ super + a; {o,t,v,c}
 
 # Launcher
 super + @space
-  rofi -show drun
+  rofi -show drun -show-icons
 super + ctrl + @space
   rofi -show run
 super + r
-  rofi -combi-modi ssh#window -show combi
+  rofi -combi-modi window#ssh -show combi -show-icons
 super + Tab
-  rofi -combi-modi ssh#window -show combi
+  rofi -combi-modi window#ssh -show combi -show-icons
 alt + Tab
-  rofi -combi-modi ssh#window -show combi
+  rofi -combi-modi window#ssh -show combi -show-icons
 
 # Toggle polybar
 super + e
@@ -56,10 +56,18 @@ super + {_,shift + }w
 super + z
   ~/dotfiles-v3/layout-switch.sh
 
-super + Escape; {s,r,l,h}
-  {systemctl poweroff,systemctl reboot,light-locker-command -l,systemctl suspend}
+super + Escape; l
+  light-locker-command -l
+super + Escape; {p,r,s}
+  systemctl {poweroff,reboot,suspend}
+
+super + shift + Escape
+  ~/dotfiles-v3/rofi-system-menu.sh
 
 # Player Controls
+super + XF86AudioPlay
+  ~/dotfiles-v3/rofi-change-output.sh
+
 XF86AudioMute
   ~/dotfiles-v3/toggle-mute.sh
 

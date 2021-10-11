@@ -68,13 +68,12 @@ format-prefix = ""
 format-prefix-foreground = ${colors.foreground-alt}
 format-prefix-underline = ${colors.primary}
 
-label-layout = %layout%
+label-layout = "%layout%"
 label-layout-underline = ${colors.primary}
 
 label-indicator-padding = 2
 label-indicator-margin = 1
-label-indicator-background = ${colors.secondary}
-label-indicator-underline = ${colors.secondary}
+label-indicator-underline = ${colors.primary}
 
 [module/filesystem]
 type = internal/fs

@@ -2,22 +2,22 @@
   background-color: #282c34;
   border-color: #c678dd;
   text-color: #abb2bf;
-  font: "FiraCode Nerd Font Mono 12";
-  prompt-font: "FiraCode Nerd Font Mono 12";
+  font: "FiraCode Nerd Font Mono 16";
+  prompt-font: "FiraCode Nerd Font Mono 16";
   prompt-background: @border-color;
   prompt-foreground: @background-color;
   prompt-padding: 4px;
   alternate-normal-background: @background-color;
   alternate-normal-foreground: @text-color;
-  selected-normal-background: @border-color;
-  selected-normal-foreground: @background-color;
+  selected-normal-background: @background-color;
+  selected-normal-foreground: @border-color;
   spacing: 3;
-  icon-size: 1.2em;
+  icon-size: 1em;
 }
 
 #window {
   border: 2;
-  padding: 20;
+  padding: 20px;
 }
 
 #mainbox {
@@ -31,19 +31,15 @@
 }
 
 #listview {
-  fixed-height: 0;
-  border: 2px solid 0px 0px;
-  spacing: 2px;
-  scrollbar: true;
   padding: 5px 0px 0px;
 }
 
 #element {
-  border: 0;
-  padding: 1px 5px;
+  padding: 5px;
 }
 
 #element.selected.normal {
+  border: 4px solid;
   background-color: @selected-normal-background;
   text-color: @selected-normal-foreground;
 }
@@ -71,7 +67,7 @@
 
 #inputbar {
   spacing: 0;
-  padding: 1px;
+  padding: 0px;
 }
 
 #case-indicator {
@@ -79,7 +75,7 @@
 }
 
 #entry {
-  padding: 4px;
+  padding: 4px 0px 0px 4px;
 }
 
 #prompt {
