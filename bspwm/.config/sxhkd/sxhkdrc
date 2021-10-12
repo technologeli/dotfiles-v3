@@ -1,3 +1,4 @@
+# TODO screenshot tool
 # Terminal
 super + Return
   alacritty
@@ -15,8 +16,8 @@ super + Return
 # g: steam
 
 # Main Apps
-super + a; {b,d,s,k}
-  {firefox,discord,spotify,keepassxc}
+super + a; {b,d,s,k,e}
+  {firefox,discord,spotify,keepassxc,emacs}
 # Games
 super + a; {l,g}
   {lutris,steam}

@@ -32,6 +32,7 @@ bspc rule -a Lutris desktop='^7' follow=on focus=on state=floating
 bspc rule -a Alacritty desktop='^8' follow=on focus=on
 bspc rule -a firefox desktop='^9' follow=on focus=on
 bspc rule -a Thunar desktop='^10' follow=on focus=on
+bspc rule -a Emacs desktop='^8' follow=on focus=on state=tiled
 
 # Wallpaper
 feh --bg-fill $HOME/Wallpapers-master/joeyjazz/11.jpg
