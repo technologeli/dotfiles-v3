@@ -103,7 +103,7 @@
   (evil-mode 1)
   (define-key evil-normal-state-map (kbd "C-f") 'counsel-find-file)
   (define-key evil-normal-state-map (kbd "C-b") 'counsel-switch-buffer)
-  (define-key evil-normal-state-map (kbd "C-p") 'projectile--find-file))
+  (define-key evil-normal-state-map (kbd "C-p") 'projectile-find-file))
 
 (use-package evil-collection
   :after evil
@@ -228,9 +228,6 @@
   :custom ((projectile-completion-system 'ivy))
   :bind-keymap
   ("C-c p" . projectile-command-map))
-
-(eli/leader-keys
-  "."  '(projectile-find-file-in-directory "~/dotfiles-v3" :which-key "dotfiles"))
 
 (use-package magit)
 
