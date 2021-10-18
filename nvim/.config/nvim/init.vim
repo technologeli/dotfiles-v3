@@ -186,8 +186,10 @@ let g:netrw_winsize = 25
 let g:netrw_bufsettings = 'noma nomod nu rnu nowrap ro nobl'
 
 let mapleader = ' '
-" CTRL+Backspace deletes a full word
+" CTRL+Backspace to delete a full word
 inoremap <C-H> <C-W>
+" Mac variant (alt + backspace)
+inoremap <M-backspace> <C-W>
 
 " Terminal
 " Normal mode using CTRL+[
