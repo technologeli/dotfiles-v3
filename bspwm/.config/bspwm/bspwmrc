@@ -25,11 +25,13 @@ bspc config gapless_monocle      true
 
 bspc rule -a KeePassXC desktop='^2' follow=on focus=on
 bspc rule -a Spotify desktop='^3' follow=on focus=on
+bspc rule -a ncspot desktop='^3' follow=on focus=on
 bspc rule -a discord desktop='^4' follow=on focus=on
 bspc rule -a obs desktop='^5' follow=on focus=on
 bspc rule -a "VirtualBox Manager" desktop='^6' follow=on focus=on state=floating
 bspc rule -a Lutris desktop='^7' follow=on focus=on state=floating
 bspc rule -a Alacritty desktop='^8' follow=on focus=on
+bspc rule -a VSCodium desktop='^8' follow=on focus=on
 bspc rule -a firefox desktop='^9' follow=on focus=on
 bspc rule -a Thunar desktop='^10' follow=on focus=on
 bspc rule -a Emacs desktop='^8' follow=on focus=on state=tiled

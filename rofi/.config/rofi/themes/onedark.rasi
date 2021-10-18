@@ -2,8 +2,8 @@
   background-color: #282c34;
   border-color: #c678dd;
   text-color: #abb2bf;
-  font: "FiraCode Nerd Font Mono 16";
-  prompt-font: "FiraCode Nerd Font Mono 16";
+  font: "Open Sans 16";
+  prompt-font: @font;
   prompt-background: @border-color;
   prompt-foreground: @background-color;
   prompt-padding: 4px;

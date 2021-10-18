@@ -1,7 +1,10 @@
-# TODO screenshot tool
 # Terminal
 super + Return
   alacritty
+
+# screenshot tool
+Print
+  ~/dotfiles-v3/maim.sh
 
 # Applications
 # b: firefox
@@ -16,8 +19,10 @@ super + Return
 # g: steam
 
 # Main Apps
-super + a; {b,d,s,k,e}
-  {firefox,discord,spotify,keepassxc,emacs}
+super + a; {b,d,k,e,v}
+  {firefox,discord,keepassxc,emacs,codium}
+super + a; s
+  alacritty --class ncspot,ncspot -e ncspot
 # Games
 super + a; {l,g}
   {lutris,steam}
@@ -82,7 +87,7 @@ XF86AudioPlay
   playerctl play-pause
 
 shift + XF86AudioPlay
-  playerctl play-pause -p spotify
+  playerctl play-pause -p ncspot
 
 ctrl + XF86AudioPlay
   playerctl play-pause -p firefox
