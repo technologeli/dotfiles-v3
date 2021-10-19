@@ -21,12 +21,20 @@ set mouse=a
 set termguicolors
 set cursorline
 set formatoptions-=cro
+set completeopt=menu,menuone,noselect
 
 call plug#begin('~/.local/share/nvim/plugged')
+
+" Gam
+"Plug 'ThePrimeagen/vim-be-good'
 
 " Theming
 Plug 'joshdick/onedark.vim'
 Plug 'itchyny/lightline.vim'
+
+" TREE
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'} 
+Plug 'nvim-treesitter/playground'
 
 " LSP
 Plug 'neovim/nvim-lspconfig'
@@ -72,6 +80,22 @@ let g:lightline = {
   \ },
   \ }
 
+" TREE 2
+lua <<EOF
+require'nvim-treesitter.configs'.setup {
+  ensure_installed = { "typescript", "tsx", "lua", "html", "bash", "json" },
+  highlight = {
+    enable = true,
+    -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
+    -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
+    -- Using this option may slow down your editor, and you may see some duplicate highlights.
+    -- Instead of true it can also be a list of languages
+    additional_vim_regex_highlighting = false,
+  },
+}
+EOF
+
+
 " LSP
 let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy']
 lua << EOF
@@ -88,14 +112,12 @@ cmp.setup({
     ['<C-f>'] = cmp.mapping.scroll_docs(4),
     ['<C-Space>'] = cmp.mapping.complete(),
     ['<C-e>'] = cmp.mapping.close(),
+    ['<CR>'] = cmp.mapping.confirm({ select = true }),
     ['<Tab>'] = cmp.mapping(cmp.mapping.select_next_item()),
     ['<S-Tab>'] = cmp.mapping(cmp.mapping.select_prev_item()),
   },
   sources = {
     { name = 'nvim_lsp' },
-  },
-  completion = {
-    completeopt = 'menu,menuone,noinsert,preview',
   },
   confirmation = {
     get_commit_characters = function(commit_characters)
@@ -204,7 +226,7 @@ nnoremap <C-q>      <cmd>call ToggleQFList(1)<cr>
 nnoremap <leader>q  <cmd>call ToggleQFList(0)<cr>
 
 " Definitions
-nnoremap <leader>d <cmd>lua vim.lsp.buf.definition()<cr>
+nnoremap <leader>gd <cmd>lua vim.lsp.buf.definition()<cr>
 nnoremap <leader>b <C-^>
 
 " Default Mappings
@@ -212,8 +234,15 @@ nnoremap <leader>b <C-^>
 " <C-v> open in a vsplit
 " <C-t> open in a new tab
 
+" Register stuff
+xnoremap <leader>p "_dP
+nnoremap <leader>y "+y
+vnoremap <leader>y "+y
+nnoremap <leader>d "_d
+vnoremap <leader>d "_d
+
 " Telescope
-nnoremap <leader>ps <cmd>lua require('telescope.builtin').grep_string({search=vim.fn.input("Grep For > ")})<cr>
+nnoremap <leader>rg <cmd>lua require('telescope.builtin').grep_string({search=vim.fn.input("Grep For > ")})<cr>
 nnoremap <C-p>      <cmd>lua require('telescope.builtin').git_files()<cr>
 nnoremap <leader>f  <cmd>lua require('telescope.builtin').find_files({hidden=true})<cr>
 nnoremap <C-f>      <cmd>lua require('telescope.builtin').find_files({hidden=true, search_dirs={"~/dotfiles-v3", "~/school", "~/work", "~/personal"}})<cr>
