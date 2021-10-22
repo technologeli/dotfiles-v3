@@ -20,6 +20,9 @@ sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.
 # HTML, CSS, JSON, Eslint
 # sudo npm i -g vscode-langservers-extracted
 
+# Tailwind
+# npm install -g @tailwindcss/language-server
+
 # Lua LSP
 # You should run this one interactively.
 # https://github.com/sumneko/lua-language-server/wiki/Build-and-Run-(Standalone)

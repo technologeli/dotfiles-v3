@@ -146,6 +146,10 @@ require'lspconfig'.bashls.setup {
   capabilities = capabilities
 }
 
+require'lspconfig'.tailwindcss.setup {
+  capabilities = capabilities
+}
+
 capabilities.textDocument.completion.completionItem.snippedSupport = true
 require'lspconfig'.cssls.setup {
   capabilities = capabilities
@@ -335,6 +339,7 @@ require('telescope').setup{
             i = {
             },
             n = {
+                ["q"] = actions.close,
                 ["l"] = actions.select_default + actions.center
             }
         }
