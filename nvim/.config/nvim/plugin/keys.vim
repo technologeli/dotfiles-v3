@@ -3,11 +3,12 @@ inoremap <C-H> <C-W>
 " Mac variant (alt + backspace)
 inoremap <M-backspace> <C-W>
 
+nnoremap <leader>e <cmd>Ex<cr>
+nnoremap <leader>s <cmd>Sex<cr>
+nnoremap <leader>v <cmd>Vex<cr>
+
 " C-^ is too hard
 nnoremap <leader>b <C-^>
-
-" Definitions
-nnoremap <leader>gd <cmd>lua vim.lsp.buf.definition()<cr>
 
 " Terminal
 " Normal mode using CTRL+[
