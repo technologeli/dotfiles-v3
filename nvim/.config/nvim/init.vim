@@ -52,6 +52,9 @@ Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-lua/popup.nvim'
 Plug 'ThePrimeagen/harpoon'
 
+" Binding bad
+Plug 'folke/which-key.nvim'
+
 call plug#end()
 
 let mapleader = ' '

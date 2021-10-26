@@ -1,5 +1,22 @@
 colorscheme onedark
 highlight Normal guibg=none
+highlight Pmenu guibg=none
+highlight QuickFixLine guifg=#c678dd guibg=none
+
+fun! Harpoon()
+  let m = luaeval('require("harpoon.mark").status()')
+  if m == ""
+    return m
+  else
+    return "H:" . m
+  endif
+endfun
+
+augroup HarpoonGroup
+  autocmd!
+  autocmd BufNewFile,BufReadPost * call Harpoon()
+  autocmd BufEnter * call Harpoon()
+augroup END
 
 let g:lightline = {
   \ 'colorscheme': 'onedark',
@@ -7,10 +24,11 @@ let g:lightline = {
   \   'left': [ [ 'mode', 'paste' ],
   \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ],
   \   'right': [ ['lineinfo'],
-  \              [ 'fileencoding', 'filetype' ] ]
+  \              [ 'fileencoding', 'filetype', 'harpoon' ] ]
   \ },
   \ 'component_function': {
-  \   'gitbranch': 'FugitiveHead'
+  \   'gitbranch': 'FugitiveHead',
+  \   'harpoon': 'Harpoon'
   \ },
   \ }
 
