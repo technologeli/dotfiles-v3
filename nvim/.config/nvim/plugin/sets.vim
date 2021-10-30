@@ -25,3 +25,4 @@ set completeopt=menu,menuone,noselect
 set splitbelow
 set splitright
 set timeoutlen=500
+set noshowmode

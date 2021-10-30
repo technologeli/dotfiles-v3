@@ -1,4 +1,4 @@
-nnoremap <leader>gs <cmd>Git<cr>
+nnoremap <leader>gs <cmd>Git \| only<cr>
 nnoremap <leader>gc <cmd>GCheckout<cr>
 " Merge helpers
 nnoremap <leader>gf <cmd>diffget //2<cr>

@@ -11,6 +11,9 @@ nnoremap <leader>lr <cmd>Telescope lsp_references theme=ivy hidden=true<cr>
 nnoremap <leader>ld <cmd>Telescope lsp_definitions theme=ivy hidden=true<cr>
 nnoremap <leader>lt <cmd>Telescope lsp_type_definitions theme=ivy hidden=true<cr>
 
+" Help docs
+nnoremap <leader>hd <cmd>Telescope help_tags theme=ivy<cr>
+
 lua << EOF
 local actions = require('telescope.actions')
 require('telescope').setup {

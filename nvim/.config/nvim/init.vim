@@ -7,9 +7,10 @@ call plug#begin('~/.local/share/nvim/plugged')
 Plug 'rstacruz/vim-closer'
 
 " Theming
- Plug 'joshdick/onedark.vim'
- Plug 'morhetz/gruvbox'
- Plug 'itchyny/lightline.vim'
+Plug 'joshdick/onedark.vim'
+Plug 'morhetz/gruvbox'
+Plug 'nvim-lualine/lualine.nvim'
+Plug 'kyazdani42/nvim-web-devicons'
 
 " TREE
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'} 
@@ -45,7 +46,8 @@ Plug 'airblade/vim-gitgutter'
 Plug 'stsewd/fzf-checkout.vim'
 
 " Colors
-Plug 'ap/vim-css-color'
+"Plug 'ap/vim-css-color'
+Plug 'norcalli/nvim-colorizer.lua'
 
 " Harpoon
 Plug 'nvim-lua/plenary.nvim'
