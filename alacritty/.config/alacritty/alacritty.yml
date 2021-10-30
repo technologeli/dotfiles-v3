@@ -160,38 +160,43 @@ font:
 #draw_bold_text_with_bright_colors: false
 # Base16 OneDark - alacritty color config
 # Lalit Magant (http://github.com/tilal6991)
+# onedark Alacritty Colors
 colors:
   # Default colors
   primary:
     background: "#282c34"
     foreground: "#abb2bf"
 
-  # Colors the cursor will use if `custom_cursor_colors` is true
-  cursor:
-    text: "#282c34"
-    cursor: "#abb2bf"
+  # Selection colors
+  selection:
+    text: CellForeground
+    background: "#393f4a"
 
   # Normal colors
   normal:
-    black: "#282c34"
-    red: "#e06c75"
+    black: "#20232A"
+    red: "#e86671"
     green: "#98c379"
-    yellow: "#e5c07b"
+    yellow: "#e0af68"
+    blue: "#61afef"
+    magenta: "#c678dd"
+    cyan: "#56b6c2"
+    white: "#798294"
+
+  # Bright colors
+  bright:
+    black: "#21252b"
+    red: "#e86671"
+    green: "#98c379"
+    yellow: "#e0af68"
     blue: "#61afef"
     magenta: "#c678dd"
     cyan: "#56b6c2"
     white: "#abb2bf"
 
-  # Bright colors
-  bright:
-    black: "#545862"
-    red: "#d19a66"
-    green: "#353b45"
-    yellow: "#3e4451"
-    blue: "#565c64"
-    magenta: "#b6bdca"
-    cyan: "#be5046"
-    white: "#c8ccd4"
+  indexed_colors:
+    - { index: 16, color: "#282c34" }
+    - { index: 17, color: "#f65866" }
 
 draw_bold_text_with_bright_colors: false
 # Colors (Tomorrow Night)
