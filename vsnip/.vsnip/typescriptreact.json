@@ -1,0 +1,25 @@
+{
+  "rafce": {
+    "prefix": "rafce",
+    "body": [
+      "const $1: React.FC = () => {",
+      "\treturn $2;",
+      "};",
+      "",
+      "export default $1;"
+    ]
+  },
+  "rafcep": {
+    "prefix": "rafcep",
+    "body": [
+      "interface $1Props {",
+      "\t$2",
+      "};",
+      "const $1: React.FC<$1Props> = () => {",
+      "\treturn $3;",
+      "};",
+      "",
+      "export default $1;"
+    ]
+  }
+}

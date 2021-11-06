@@ -1,6 +1,7 @@
 colorscheme onedark
 highlight Normal guibg=none
 highlight Pmenu guibg=none
+highlight PmenuThumb guibg=#61afef
 highlight QuickFixLine guifg=#c678dd guibg=none
 
 fun! Harpoon()

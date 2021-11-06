@@ -12,6 +12,9 @@ Plug 'morhetz/gruvbox'
 Plug 'nvim-lualine/lualine.nvim'
 Plug 'kyazdani42/nvim-web-devicons'
 
+" Ex-treem
+Plug 'kyazdani42/nvim-tree.lua'
+
 " TREE
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'} 
 Plug 'nvim-treesitter/playground'

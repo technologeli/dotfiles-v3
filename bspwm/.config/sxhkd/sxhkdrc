@@ -2,6 +2,12 @@
 super + Return
   alacritty
 
+# screenkey
+super + shift + o
+  screenkey --timeout 2 -s small
+super + ctrl + o
+  killall screenkey
+
 # screenshot tool
 Print
   ~/dotfiles-v3/maim.sh
