@@ -4,7 +4,7 @@ call plug#begin('~/.local/share/nvim/plugged')
 "Plug 'ThePrimeagen/vim-be-good'
 
 " ()
-Plug 'rstacruz/vim-closer'
+" Plug 'rstacruz/vim-closer'
 
 " Theming
 Plug 'joshdick/onedark.vim'
