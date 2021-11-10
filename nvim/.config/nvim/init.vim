@@ -11,6 +11,7 @@ Plug 'joshdick/onedark.vim'
 Plug 'morhetz/gruvbox'
 Plug 'nvim-lualine/lualine.nvim'
 Plug 'kyazdani42/nvim-web-devicons'
+Plug 'pantharshit00/vim-prisma'
 
 " Ex-treem
 Plug 'kyazdani42/nvim-tree.lua'

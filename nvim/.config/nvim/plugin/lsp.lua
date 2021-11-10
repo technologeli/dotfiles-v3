@@ -102,6 +102,14 @@ require'lspconfig'.vimls.setup {
   capabilities = capabilities
 }
 
+require'lspconfig'.html.setup {
+  capabilities = capabilities,
+}
+
+require'lspconfig'.prismals.setup {
+  capabilities = capabilities
+}
+
 capabilities.textDocument.completion.completionItem.snippedSupport = true
 require'lspconfig'.cssls.setup {
   capabilities = capabilities

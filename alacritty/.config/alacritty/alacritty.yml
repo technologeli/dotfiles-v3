@@ -185,7 +185,8 @@ colors:
 
   # Bright colors
   bright:
-    black: "#21252b"
+    #black: "#21252b"
+    black: "#393f4a"
     red: "#e86671"
     green: "#98c379"
     yellow: "#e0af68"
