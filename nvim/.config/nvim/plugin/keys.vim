@@ -3,9 +3,9 @@ inoremap <C-H> <C-W>
 " Mac variant (alt + backspace)
 inoremap <M-backspace> <C-W>
 
-nnoremap <leader>e <cmd>Ex<cr>
-nnoremap <leader>s <cmd>Sex<cr>
-nnoremap <leader>v <cmd>Vex<cr>
+"nnoremap <leader>e <cmd>Ex<cr>
+"nnoremap <leader>s <cmd>Sex<cr>
+"nnoremap <leader>v <cmd>Vex<cr>
 
 " C-^ is too hard
 nnoremap <leader>b <C-^>
