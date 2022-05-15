@@ -16,8 +16,9 @@ alias rgf='rg --hidden --files --ignore-file ~/.gitignore | rg'
 # Safety measures to prevent accidental overwriting.
 alias cp='cp -i'
 alias mv='mv -i'
+
 # I use trash-cli, so rm is disabled in my shell.
-alias rm='echo "Error: rm is not recommended. Please use trash instead."'
+# alias rm='echo "Error: rm is not recommended. Please use trash instead."'
 
 # Quick launch certain applications.
 # Use -p for editing multiple files at once.

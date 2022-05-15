@@ -20,6 +20,12 @@ ssh_only = false
 format = '[$hostname](yellow) '
 trim_at = '.local'
 
+[username]
+style_root = "red"
+style_user = "yellow"
+format = '[$user]($style)@'
+show_always = true
+
 [shell]
 disabled = false
 bash_indicator = '[\[bash\]](bright-black)'
