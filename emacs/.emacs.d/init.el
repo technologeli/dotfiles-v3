@@ -45,7 +45,7 @@
 
 (use-package doom-themes
   :config
-  (load-theme 'doom-gruvbox t)
+  (load-theme 'doom-tomorrow-night t)
 
   ;; Corrects (and improves) org-mode's native fontification.
   (doom-themes-org-config))
@@ -114,7 +114,7 @@
   (eli/leader-keys
     "t"  '(:ignore t :which-key "toggles")
     "tt" '(counsel-load-theme :which-key "choose theme")
-    "r"  '(recentf-open-files :which-key "recent files"))
+    "r"  '(recentf-open-files :which-key "recent files")))
 
 (global-set-key (kbd "<mouse-9>") 'evil-jump-forward)
 (global-set-key (kbd "<mouse-8>") 'evil-jump-backward)
