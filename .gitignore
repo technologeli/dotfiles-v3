@@ -1,8 +1,7 @@
 vscode/.config/VSCodium/
 .git/
 __pycache__
-emacs
-!emacs/.config/emacs/init.el
+emacs/.emacs.d/init.el\~
 
 !vscode/.config/VSCodium/Users/settings.json
 !vscode/.config/VSCodium/Users/keybindings.json
