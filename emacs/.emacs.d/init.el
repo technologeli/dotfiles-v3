@@ -114,7 +114,9 @@
   (eli/leader-keys
     "t"  '(:ignore t :which-key "toggles")
     "tt" '(counsel-load-theme :which-key "choose theme")
-    "r"  '(recentf-open-files :which-key "recent files")))
+    "r"  '(recentf-open-files :which-key "recent files")
+    "p"  '(projectile-command-map :which-key "projectile")
+    "g"  '(magit-status :which-key "magit")))
 
 (global-set-key (kbd "<mouse-9>") 'evil-jump-forward)
 (global-set-key (kbd "<mouse-8>") 'evil-jump-backward)
@@ -223,6 +225,7 @@
   (font-lock-add-keywords 'org-mode
                           '(("^ *\\([-]\\) "
                              (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
+
   ;; Ensure that anything that should be fixed-pitch in Org files appears that way
   (set-face-attribute 'org-block nil    :foreground nil :inherit 'fixed-pitch)
   (set-face-attribute 'org-table nil    :inherit 'fixed-pitch)
