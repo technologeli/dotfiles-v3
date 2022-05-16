@@ -114,9 +114,8 @@
   (eli/leader-keys
     "t"  '(:ignore t :which-key "toggles")
     "tt" '(counsel-load-theme :which-key "choose theme")
-    "r"  '(recentf-open-files :which-key "recent files")
-    "p"  '(projectile-command-map :which-key "projectile")
-    "g"  '(magit-status :which-key "magit")))
+    "b"  '(counsel-ibuffer :which-key "buffer")
+    "r"  '(counsel-recentf :which-key "recent files")))
 
 (global-set-key (kbd "<mouse-9>") 'evil-jump-forward)
 (global-set-key (kbd "<mouse-8>") 'evil-jump-backward)
@@ -198,6 +197,8 @@
 (use-package magit
   :custom
   (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
+(eli/leader-keys
+  "g" '(magit-status :which-key "magit"))
 
 ;; Something to look into: forge
 ;; Forge integrates GitHub features into emacs, such as issues.
@@ -244,7 +245,22 @@
   :config
   (setq org-ellipsis " ▾")
   (setq org-hide-emphasis-markers t)
+
+  (setq org-agenda-start-with-log-mode t)
+  (setq org-log-done 'time)
+  (setq org-log-into-drawer t)
+
+  (setq org-agenda-files
+	'("" ""))
   (eli/org-font-setup))
+
+(eli/leader-keys
+  "o"  '(:ignore o :which-key "org")
+  "ot" '(org-todo :which-key "org-todo")
+  "oi" '(org-time-stamp :which-key "org-time-stamp")
+  "og" '(counsel-org-tag :which-key "counsel-org-tag")
+  "oa" '(org-agenda :which-key "org-agenda")
+  "os" '(org-schedule :which-key "org-schedule"))
 
 ;; Nice header bullets
 (use-package org-bullets
