@@ -47,4 +47,4 @@ nnoremap <silent> <leader>J :m .+1<CR>==
 nnoremap <silent> <leader>K :m .-2<CR>==
 
 " Zen mode
-nnoremap <leader>z :ZenMode<CR>
+nnoremap <silent> <leader>z :ZenMode<CR>
