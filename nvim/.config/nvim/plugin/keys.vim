@@ -45,3 +45,6 @@ inoremap <C-j> <esc>:m .+1<CR>==a
 inoremap <C-k> <esc>:m .-2<CR>==a
 nnoremap <leader>J :m .+1<CR>==
 nnoremap <leader>K :m .-2<CR>==
+
+" Goyo
+nnoremap <leader>z :Goyo<CR>

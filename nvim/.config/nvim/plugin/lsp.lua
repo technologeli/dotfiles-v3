@@ -78,11 +78,16 @@ cmp.setup({
 
 local capabilities = require'cmp_nvim_lsp'.update_capabilities(vim.lsp.protocol.make_client_capabilities())
 -- Setup lspconfig.
-require'lspconfig'.tsserver.setup {
+require'lspconfig'.pyright.setup {
   capabilities = capabilities
 }
 
-require'lspconfig'.pyright.setup {
+require'lspconfig'.vimls.setup {
+  capabilities = capabilities
+}
+
+--[[
+require'lspconfig'.tsserver.setup {
   capabilities = capabilities
 }
 
@@ -98,10 +103,6 @@ require'lspconfig'.clangd.setup {
   capabilities = capabilities
 }
 
-require'lspconfig'.vimls.setup {
-  capabilities = capabilities
-}
-
 require'lspconfig'.html.setup {
   capabilities = capabilities,
 }
@@ -114,6 +115,7 @@ capabilities.textDocument.completion.completionItem.snippedSupport = true
 require'lspconfig'.cssls.setup {
   capabilities = capabilities
 }
+--]]
 
 -- lua only on linux
 local sumneko_root_path = "/home/eli/lua-language-server"

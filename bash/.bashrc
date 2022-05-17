@@ -17,5 +17,3 @@ export HISTCONTROL=erasedups:ignorespace
 # Starship prompt!
 # https://starship.rs
 eval "$(starship init bash)"
-
-alias luamake=/home/eli/.sources/lua-language-server/3rd/luamake/luamake

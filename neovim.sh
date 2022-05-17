@@ -6,7 +6,7 @@ sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.
        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 
 # LSP Stuff
-# https://github.com/neovim/nvim-lspconfig/blob/master/CONFIG.md
+# https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
 
 # Python LSP
 # sudo npm i -g pyright
@@ -21,7 +21,10 @@ sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.
 # sudo npm i -g vscode-langservers-extracted
 
 # Tailwind
-# npm install -g @tailwindcss/language-server
+# sudo npm i -g @tailwindcss/language-server
+
+# Vim
+# sudo npm i -g vim-language-server
 
 # Lua LSP
 # https://github.com/sumneko/lua-language-server/

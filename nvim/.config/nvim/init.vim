@@ -66,8 +66,6 @@ Plug 'stsewd/fzf-checkout.vim'
 Plug 'norcalli/nvim-colorizer.lua'
 
 " Harpoon
-Plug 'nvim-lua/plenary.nvim'
-Plug 'nvim-lua/popup.nvim'
 Plug 'ThePrimeagen/harpoon'
 
 " Binding bad
@@ -75,7 +73,10 @@ Plug 'folke/which-key.nvim'
 
 " Vimwiki
 Plug 'vimwiki/vimwiki'
+Plug 'junegunn/goyo.vim'
 
 call plug#end()
 
 let mapleader = ' '
+
+let g:vimwiki_list = [{'path': '~/wikeli/', 'syntax': 'markdown', 'ext': '.md'}]
