@@ -24,6 +24,14 @@
 ;; ensures packages are always downloaded
 (setq use-package-always-ensure t)
 
+;; Keep folders clean
+(use-package no-littering)
+
+;; no-littering doesn't set this by default so we must place
+;; auto save files in the same path as it uses for sessions
+(setq auto-save-file-name-transforms
+      `((".*" ,(no-littering-expand-var-file-name "auto-save/") t)))
+
 ;; UI and Theming
 (setq inhibit-startup-message t)
 (setq ring-bell-function 'ignore)
@@ -113,7 +121,7 @@
     :global-prefix "C-SPC")
   (eli/leader-keys
     "t"  '(:ignore t :which-key "toggles")
-    "tt" '(counsel-load-theme :which-key "choose theme")
+    "tc" '(counsel-load-theme :which-key "choose theme")
     "b"  '(counsel-ibuffer :which-key "buffer")
     "r"  '(counsel-recentf :which-key "recent files")))
 
@@ -276,3 +284,48 @@
 
 (use-package visual-fill-column
   :hook (org-mode . eli/org-mode-visual-fill))
+
+;; LSP
+(use-package lsp-mode
+  :commands (lsp lsp-deferred)
+  :init
+  (setq lsp-keymap-prefix "C-c l")
+  :config
+  (lsp-enable-which-key-integration t))
+
+(use-package lsp-ui
+  :hook (lsp-mode . lsp-ui-mode)
+  :custom
+  (setq lsp-ui-doc-position 'bottom))
+
+(use-package lsp-treemacs
+  :after lsp)
+
+(use-package lsp-ivy)
+
+(eli/leader-keys
+  "tt" '(treemacs :which-key "filetree")
+  "lo" '(lsp-organize-imports :which-key "organize imports")
+  "lR" '(lsp-treemacs-references :which-key "find references")
+  "lr" '(lsp-rename :which-key "rename")
+  "ld" '(lsp-find-definition :which-key "find definition")
+  "lf" '(lsp-ivy-global-workspace-symbol :which-key "find symbol"))
+
+;; Better completions
+(use-package company
+  :after lsp-mode
+  :hook (lsp-mode . company-mode)
+  :bind
+  (:map company-active-map
+	("<tab>" . company-complete-section))
+  (:map lsp-mode-map
+	("<tab>" . company-indent-or-complete-common))
+  :custom
+  (company-minimum-prefix-length 1)
+  (company-idle-delay 0.0))
+  
+
+;; Python
+;; pyright must be installed
+(use-package python-mode
+  :hook (python-mode . lsp-deferred))
