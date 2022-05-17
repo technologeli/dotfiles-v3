@@ -78,5 +78,3 @@ Plug 'folke/zen-mode.nvim'
 call plug#end()
 
 let mapleader = ' '
-
-let g:vimwiki_list = [{'path': '~/wikeli/', 'syntax': 'markdown', 'ext': '.md'}]
