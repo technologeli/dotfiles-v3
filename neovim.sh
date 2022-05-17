@@ -1,5 +1,5 @@
 #!/bin/bash
-# Ensure that you have Neovim 0.5 installed.
+# Ensure that you have the latest version of Neovim installed.
 
 # vim-plug install
 sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
@@ -24,6 +24,5 @@ sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.
 # npm install -g @tailwindcss/language-server
 
 # Lua LSP
-# You should run this one interactively.
-# https://github.com/sumneko/lua-language-server/wiki/Build-and-Run-(Standalone)
+# https://github.com/sumneko/lua-language-server/
 

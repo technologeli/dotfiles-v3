@@ -116,9 +116,8 @@ require'lspconfig'.cssls.setup {
 }
 
 -- lua only on linux
-local system_name = "Linux"
-local sumneko_root_path = "/home/eli/.sources/lua-language-server"
-local sumneko_binary = sumneko_root_path.."/bin/"..system_name.."/lua-language-server"
+local sumneko_root_path = "/home/eli/lua-language-server"
+local sumneko_binary = sumneko_root_path.."/bin/lua-language-server"
 require'lspconfig'.sumneko_lua.setup {
   cmd = {sumneko_binary, "-E", sumneko_root_path .. "/main.lua"};
   settings = {
