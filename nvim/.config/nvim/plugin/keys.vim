@@ -46,5 +46,5 @@ inoremap <silent> <C-k> <esc>:m .-2<CR>==a
 nnoremap <silent> <leader>J :m .+1<CR>==
 nnoremap <silent> <leader>K :m .-2<CR>==
 
-" Goyo
+" Zen mode
 nnoremap <leader>z :ZenMode<CR>
