@@ -73,7 +73,7 @@ Plug 'folke/which-key.nvim'
 
 " Vimwiki
 Plug 'vimwiki/vimwiki'
-Plug 'junegunn/goyo.vim'
+Plug 'folke/zen-mode.nvim'
 
 call plug#end()
 
