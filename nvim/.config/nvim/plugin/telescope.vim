@@ -15,8 +15,8 @@ nnoremap <leader>lt <cmd>Telescope lsp_type_definitions theme=ivy hidden=true<cr
 nnoremap <leader>hd <cmd>Telescope help_tags theme=ivy<cr>
 
 lua << EOF
-local actions = require('telescope.actions')
-require('telescope').setup {
+local actions = require'telescope.actions'
+require'telescope'.setup {
   defaults = {
     vimgrep_arguments = {
       'rg',
