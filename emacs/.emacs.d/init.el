@@ -22,6 +22,15 @@
 ;; ensures packages are always downloaded
 (setq use-package-always-ensure t)
 
+(use-package auto-package-update
+  :custom
+  (auto-package-update-interval 7)
+  (auto-package-update-prompt-before-update t)
+  (auto-package-update-hide-results t)
+  :config
+  (auto-package-update-maybe)
+  (auto-package-update-at-time "09:00"))
+
 (use-package no-littering)
 
 ;; no-littering doesn't set this by default so we must place
@@ -43,12 +52,14 @@
 (setq use-dialog-box nil)
 (column-number-mode)
 (set-fringe-mode 10)
-(dolist (mode '(org-mode-hook))
+(dolist (mode '(org-mode-hook
+                term-mode-hook
+                vterm-mode-hook))
   (add-hook mode (lambda () (display-line-numbers-mode 0))))
 
 (use-package doom-themes
   :config
-  (load-theme 'doom-tomorrow-night t)
+  (load-theme 'doom-one t)
 
   ;; Corrects (and improves) org-mode's native fontification.
   (doom-themes-org-config))
@@ -283,7 +294,6 @@
   "ld" '(lsp-find-definition :which-key "find definition")
   "lf" '(lsp-ivy-global-workspace-symbol :which-key "find symbol"))
 
-;; Better completions
 (use-package company
   :after lsp-mode
   :hook (lsp-mode . company-mode)
@@ -302,4 +312,41 @@
 (use-package python-mode
   :hook (python-mode . lsp-deferred))
 
-(+ 2 4)
+(use-package term
+  :config
+  (setq explicit-shell-file-name "fish")
+  (setq term-prompt-regexp "^[^#$%>\n]*[#$%>] *"))
+
+(use-package eterm-256color
+  :hook (term-mode . eterm-256color-mode))
+
+(use-package vterm
+  :commands vterm
+  :config
+  (setq vterm-shell "/bin/fish")
+  (setq term-prompt-regexp "^[^#$%>\n]*[#$%>] *")
+  (setq vterm-max-scrollback 10000))
+
+(use-package dired
+  :ensure nil
+  :hook (dired-mode . dired-hide-details-mode)
+  :commands (dired dired-jump)
+  :custom
+  ((dired-listing-switches "-laD --group-directories-first"))
+  :config
+  (evil-collection-define-key 'normal 'dired-mode-map
+     "h" 'dired-single-up-directory
+     "l" 'dired-single-buffer))
+(eli/leader-keys
+  "d" '(dired :which-key "dired"))
+
+(use-package dired-single)
+
+(use-package all-the-icons-dired
+  :hook (dired-mode . all-the-icons-dired-mode))
+
+(use-package dired-hide-dotfiles
+  :hook (dired-mode . dired-hide-dotfiles-mode)
+  :config
+  (evil-collection-define-key 'normal 'dired-mode-map
+    "H" 'dired-hide-dotfiles-mode))

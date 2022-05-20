@@ -15,8 +15,9 @@
 
 * Package Management
 
-#+begin_src emacs-lisp
+** use-package
 
+#+begin_src emacs-lisp
 (require 'package)
 
 (setq package-archives '(("melpa" . "https://melpa.org/packages/")
@@ -34,6 +35,21 @@
 (require 'use-package)
 ;; ensures packages are always downloaded
 (setq use-package-always-ensure t)
+
+#+end_src
+
+** Automatic Package Updates
+
+#+begin_src emacs-lisp
+
+(use-package auto-package-update
+  :custom
+  (auto-package-update-interval 7)
+  (auto-package-update-prompt-before-update t)
+  (auto-package-update-hide-results t)
+  :config
+  (auto-package-update-maybe)
+  (auto-package-update-at-time "09:00"))
 
 #+end_src
 
@@ -68,12 +84,14 @@
 (setq use-dialog-box nil)
 (column-number-mode)
 (set-fringe-mode 10)
-(dolist (mode '(org-mode-hook))
+(dolist (mode '(org-mode-hook
+                term-mode-hook
+                vterm-mode-hook))
   (add-hook mode (lambda () (display-line-numbers-mode 0))))
 
 (use-package doom-themes
   :config
-  (load-theme 'doom-tomorrow-night t)
+  (load-theme 'doom-one t)
 
   ;; Corrects (and improves) org-mode's native fontification.
   (doom-themes-org-config))
@@ -91,6 +109,7 @@
 #+end_src
 
 ** Font Configuration
+
 #+begin_src emacs-lisp
 
 (set-face-attribute 'default nil :font eli/default-font :height eli/default-font-size)
@@ -101,6 +120,7 @@
 #+end_src
 
 * Persistent History
+
 #+begin_src emacs-lisp
 
 (recentf-mode 1)
@@ -132,7 +152,9 @@
 #+end_src
 
 * Keybinds
+
 ** Custom
+
 #+begin_src emacs-lisp
 
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
@@ -140,7 +162,9 @@
 (global-set-key (kbd "<mouse-8>") 'evil-jump-backward)
 
 #+end_src
+
 ** Evil Mode (Vim)
+
 #+begin_src emacs-lisp
 
 (use-package evil
@@ -167,6 +191,7 @@
 #+end_src
 
 ** General
+
 #+begin_src emacs-lisp
 
 (use-package general
@@ -184,7 +209,9 @@
     "r"  '(counsel-recentf :which-key "recent files")))
 
 #+end_src
+
 ** Which-Key
+
 #+begin_src emacs-lisp
 (use-package which-key
   :init (which-key-mode)
@@ -193,7 +220,9 @@
   (setq which-key-idle-delay 0.2))
 #+end_src
 * Completion
+
 ** Ivy
+
 #+begin_src emacs-lisp
 
 ;; Ivy, Swiper, and Counsel are designed to work well together.
@@ -222,7 +251,9 @@
   (ivy-rich-mode 1))
 
 #+end_src
+
 ** Counsel
+
 #+begin_src emacs-lisp
 
 (use-package counsel
@@ -233,7 +264,9 @@
 	 ("C-r" . 'counsel-minibuffer-history)))
 
 #+end_src
+
 ** Helpful
+
 #+begin_src emacs-lisp
 
 (use-package helpful
@@ -247,8 +280,11 @@
   ([remap describe-variable] . counsel-describe-variable)
   ([remap describe-key] . helpful-key))
 #+end_src
+
 * Project Management
+
 ** Projectile
+
 #+begin_src emacs-lisp
 
 ;; C-c p f projectile-find-file
@@ -266,7 +302,9 @@
   ;; (setq projectile-switch-project-action #'projectile-dired))
 
 #+end_src
+
 ** Counsel Integration
+
 #+begin_src emacs-lisp
 
 (use-package counsel-projectile
@@ -274,7 +312,9 @@
   :config (counsel-projectile-mode))
 
 #+end_src
+
 ** Magit
+
 #+begin_src emacs-lisp
 
 (use-package magit
@@ -287,6 +327,7 @@
 
 ** Forge
 Forge integrates GitHub features into emacs, such as issues.
+
 * Org Mode
 
 ** Configure Babel Languages
@@ -317,7 +358,9 @@ Forge integrates GitHub features into emacs, such as issues.
 #+end_src
 
 ** Setup
+
 #+begin_src emacs-lisp
+
 (defun eli/org-mode-setup()
   (org-indent-mode)
   (visual-line-mode 1))
@@ -328,7 +371,9 @@ Forge integrates GitHub features into emacs, such as issues.
                              (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•")))))))
 
 #+end_src
+
 ** Org Package
+
 #+begin_src emacs-lisp
 
 (use-package org
@@ -354,8 +399,11 @@ Forge integrates GitHub features into emacs, such as issues.
   "os" '(org-schedule :which-key "org-schedule"))
 
 #+end_src
+
 ** Org Theming
+
 *** Header Bullets
+
 #+begin_src emacs-lisp
 
 (use-package org-bullets
@@ -364,7 +412,9 @@ Forge integrates GitHub features into emacs, such as issues.
   (org-bullets-bullet-list '("◉" "○" "●" "○" "●" "○" "●")))
 
 #+end_src
+
 *** Padding
+
 #+begin_src emacs-lisp
 
 (defun eli/org-mode-visual-fill ()
@@ -376,7 +426,9 @@ Forge integrates GitHub features into emacs, such as issues.
   :hook (org-mode . eli/org-mode-visual-fill))
 
 #+end_src
+
 *** Structure Templates
+
 #+begin_src emacs-lisp
 
 (require 'org-tempo)
@@ -385,9 +437,11 @@ Forge integrates GitHub features into emacs, such as issues.
 (add-to-list 'org-structure-template-alist '("py" . "src python"))
 
 #+end_src
+
 * LSP
 
 #+begin_src emacs-lisp
+
 (use-package lsp-mode
   :commands (lsp lsp-deferred)
   :init
@@ -419,7 +473,6 @@ Forge integrates GitHub features into emacs, such as issues.
 
 #+begin_src emacs-lisp
 
-;; Better completions
 (use-package company
   :after lsp-mode
   :hook (lsp-mode . company-mode)
@@ -438,7 +491,9 @@ Forge integrates GitHub features into emacs, such as issues.
 #+end_src
 
 ** Languages
+
 *** Python
+
 Pyright must be installed.
 
 #+begin_src emacs-lisp
@@ -448,7 +503,93 @@ Pyright must be installed.
 
 #+end_src
 
-* Test
+* Terminals
+** Term-mode
+
+If you need to send specific keys into the terminal, you may need to use char mode by pressing `C-c C-k` and re-enter line mode by pressing `C-c C-j`
+
 #+begin_src emacs-lisp
-(+ 2 4)
+
+(use-package term
+  :config
+  (setq explicit-shell-file-name "fish")
+  (setq term-prompt-regexp "^[^#$%>\n]*[#$%>] *"))
+
+#+end_src
+
+*** Better colors
+
+#+begin_src emacs-lisp
+
+(use-package eterm-256color
+  :hook (term-mode . eterm-256color-mode))
+
+#+end_src
+
+** Vterm
+
+Vterm is almost always better than term mode.
+
+#+begin_src emacs-lisp
+
+(use-package vterm
+  :commands vterm
+  :config
+  (setq vterm-shell "/bin/fish")
+  (setq term-prompt-regexp "^[^#$%>\n]*[#$%>] *")
+  (setq vterm-max-scrollback 10000))
+
+#+end_src
+
+* Dired
+
+** Primary Configuration 
+
+#+begin_src emacs-lisp
+
+(use-package dired
+  :ensure nil
+  :hook (dired-mode . dired-hide-details-mode)
+  :commands (dired dired-jump)
+  :custom
+  ((dired-listing-switches "-laD --group-directories-first"))
+  :config
+  (evil-collection-define-key 'normal 'dired-mode-map
+     "h" 'dired-single-up-directory
+     "l" 'dired-single-buffer))
+(eli/leader-keys
+  "d" '(dired :which-key "dired"))
+
+#+end_src
+
+** Dired Buffer Control
+
+#+begin_src emacs-lisp
+
+(use-package dired-single)
+
+#+end_src
+
+** Dired Icons
+
+#+begin_src emacs-lisp
+
+(use-package all-the-icons-dired
+  :hook (dired-mode . all-the-icons-dired-mode))
+
+#+end_src
+
+** Opening Specific Applications
+You can use the package called dired-open to open files in a specific application, such as videos in VLC.
+
+** Hiding Dotfiles
+
+#+begin_src emacs-lisp
+
+(use-package dired-hide-dotfiles
+  :hook (dired-mode . dired-hide-dotfiles-mode)
+  :config
+  (evil-collection-define-key 'normal 'dired-mode-map
+    "H" 'dired-hide-dotfiles-mode))
+
 #+end_src
