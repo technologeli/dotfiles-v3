@@ -1,8 +1,21 @@
+#+title Emacs Configuration
+#+PROPERTY: header-args:emacs-lisp :tangle ./init.el
+
+* Variables
+
+#+begin_src emacs-lisp
+
 (defvar eli/default-font-size 120)
 (defvar eli/default-variable-font-size 140)
 (defvar eli/frame-transparency '(90 . 90))
 (defvar eli/default-font "FiraCode Nerd Font")
 (defvar eli/default-variable-font "Ubuntu")
+
+#+end_src
+
+* Package Management
+
+#+begin_src emacs-lisp
 
 (require 'package)
 
@@ -22,6 +35,12 @@
 ;; ensures packages are always downloaded
 (setq use-package-always-ensure t)
 
+#+end_src
+
+* Keep Folders Clean
+
+#+begin_src emacs-lisp
+
 (use-package no-littering)
 
 ;; no-littering doesn't set this by default so we must place
@@ -32,6 +51,12 @@
 ;; Prevent customization variables to be put here
 (setq custom-file (locate-user-emacs-file "custom-vars.el"))
 (load custom-file 'noerror 'nomessage)
+
+#+end_src
+
+* UI and Theming
+
+#+begin_src emacs-lisp
 
 (setq inhibit-startup-message t)
 (setq ring-bell-function 'ignore)
@@ -63,18 +88,40 @@
 (use-package rainbow-delimiters
   :hook (prog-mode . rainbow-delimiters-mode))
 
+#+end_src
+
+** Font Configuration
+#+begin_src emacs-lisp
+
 (set-face-attribute 'default nil :font eli/default-font :height eli/default-font-size)
 (set-face-attribute 'fixed-pitch nil :font eli/default-font :height eli/default-font-size)
 
 (set-face-attribute 'variable-pitch nil :font eli/default-variable-font :height eli/default-variable-font-size :weight 'regular)
+
+#+end_src
+
+* Persistent History
+#+begin_src emacs-lisp
 
 (recentf-mode 1)
 (setq history-length 10)
 (savehist-mode 1)
 (save-place-mode 1)
 
+#+end_src
+
+* Refresh Buffers
+
+#+begin_src emacs-lisp
+
 (global-auto-revert-mode 1)
 (setq global-auto-revert-non-file-buffers t)
+
+#+end_src
+
+* Undo Tree
+
+#+begin_src emacs-lisp
 
 (use-package undo-tree
   :diminish undo-tree-mode
@@ -82,9 +129,19 @@
   :init (setq undo-tree-auto-save-history nil))
 (global-undo-tree-mode 1)
 
+#+end_src
+
+* Keybinds
+** Custom
+#+begin_src emacs-lisp
+
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 (global-set-key (kbd "<mouse-9>") 'evil-jump-forward)
 (global-set-key (kbd "<mouse-8>") 'evil-jump-backward)
+
+#+end_src
+** Evil Mode (Vim)
+#+begin_src emacs-lisp
 
 (use-package evil
   :init
@@ -107,6 +164,11 @@
 (use-package evil-nerd-commenter
   :bind ("M-/" . evilnc-comment-or-uncomment-lines))
 
+#+end_src
+
+** General
+#+begin_src emacs-lisp
+
 (use-package general
   :after evil
   :config
@@ -121,11 +183,18 @@
     "b"  '(counsel-ibuffer :which-key "buffer")
     "r"  '(counsel-recentf :which-key "recent files")))
 
+#+end_src
+** Which-Key
+#+begin_src emacs-lisp
 (use-package which-key
   :init (which-key-mode)
   :diminish which-key-mode
   :config
   (setq which-key-idle-delay 0.2))
+#+end_src
+* Completion
+** Ivy
+#+begin_src emacs-lisp
 
 ;; Ivy, Swiper, and Counsel are designed to work well together.
 ;; Counsel depends on Ivy and Swiper, but Ivy has some extra configuration.
@@ -152,12 +221,20 @@
   :init
   (ivy-rich-mode 1))
 
+#+end_src
+** Counsel
+#+begin_src emacs-lisp
+
 (use-package counsel
   :bind (("M-x" . counsel-M-x)
 	 ("C-x b" . counsel-ibuffer)
 	 ("C-x C-f" . counsel-find-file)
 	 :map minibuffer-local-map
 	 ("C-r" . 'counsel-minibuffer-history)))
+
+#+end_src
+** Helpful
+#+begin_src emacs-lisp
 
 (use-package helpful
   :commands (helpful-callable helpful-variable helpful-command helpful-key)
@@ -169,6 +246,10 @@
   ([remap describe-command] . helpful-command)
   ([remap describe-variable] . counsel-describe-variable)
   ([remap describe-key] . helpful-key))
+#+end_src
+* Project Management
+** Projectile
+#+begin_src emacs-lisp
 
 ;; C-c p f projectile-find-file
 ;; C-c p s r counsel-projectile-rg (use C-c o to move this into a buffer)
@@ -184,9 +265,17 @@
   ;;   (setq projectile-project-search-path '("~/Projects/Code")))
   ;; (setq projectile-switch-project-action #'projectile-dired))
 
+#+end_src
+** Counsel Integration
+#+begin_src emacs-lisp
+
 (use-package counsel-projectile
   :after projectile
   :config (counsel-projectile-mode))
+
+#+end_src
+** Magit
+#+begin_src emacs-lisp
 
 (use-package magit
   :custom
@@ -194,10 +283,26 @@
 (eli/leader-keys
   "g" '(magit-status :which-key "magit"))
 
+#+end_src
+
+** Forge
+Forge integrates GitHub features into emacs, such as issues.
+* Org Mode
+
+** Configure Babel Languages
+
+#+begin_src emacs-lisp
+
 (org-babel-do-load-languages
   'org-babel-load-languages
   '((emacs-lisp . t)
     (python . t)))
+
+#+end_src
+
+** Auto-tangle Configuration Files
+
+#+begin_src emacs-lisp
 
 ;; Tangle config.org when we save it
 (defun eli/org-babel-tangle-config ()
@@ -209,6 +314,10 @@
 
 (add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'eli/org-babel-tangle-config)))
 
+#+end_src
+
+** Setup
+#+begin_src emacs-lisp
 (defun eli/org-mode-setup()
   (org-indent-mode)
   (visual-line-mode 1))
@@ -217,6 +326,10 @@
   (font-lock-add-keywords 'org-mode
                           '(("^ *\\([-]\\) "
                              (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•")))))))
+
+#+end_src
+** Org Package
+#+begin_src emacs-lisp
 
 (use-package org
   :hook (org-mode . eli/org-mode-setup)
@@ -240,10 +353,19 @@
   "oa" '(org-agenda :which-key "org-agenda")
   "os" '(org-schedule :which-key "org-schedule"))
 
+#+end_src
+** Org Theming
+*** Header Bullets
+#+begin_src emacs-lisp
+
 (use-package org-bullets
   :hook (org-mode . org-bullets-mode)
   :custom
   (org-bullets-bullet-list '("◉" "○" "●" "○" "●" "○" "●")))
+
+#+end_src
+*** Padding
+#+begin_src emacs-lisp
 
 (defun eli/org-mode-visual-fill ()
   (setq visual-fill-column-width 100
@@ -253,11 +375,19 @@
 (use-package visual-fill-column
   :hook (org-mode . eli/org-mode-visual-fill))
 
+#+end_src
+*** Structure Templates
+#+begin_src emacs-lisp
+
 (require 'org-tempo)
 (add-to-list 'org-structure-template-alist '("sh" . "src shell"))
 (add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp"))
 (add-to-list 'org-structure-template-alist '("py" . "src python"))
 
+#+end_src
+* LSP
+
+#+begin_src emacs-lisp
 (use-package lsp-mode
   :commands (lsp lsp-deferred)
   :init
@@ -282,6 +412,12 @@
   "lr" '(lsp-rename :which-key "rename")
   "ld" '(lsp-find-definition :which-key "find definition")
   "lf" '(lsp-ivy-global-workspace-symbol :which-key "find symbol"))
+ 
+#+end_src
+
+** Autocomplete
+
+#+begin_src emacs-lisp
 
 ;; Better completions
 (use-package company
@@ -298,8 +434,21 @@
 
 (use-package company-box
   :hook (company-mode . company-box-mode))
+  
+#+end_src
+
+** Languages
+*** Python
+Pyright must be installed.
+
+#+begin_src emacs-lisp
 
 (use-package python-mode
   :hook (python-mode . lsp-deferred))
 
+#+end_src
+
+* Test
+#+begin_src emacs-lisp
 (+ 2 4)
+#+end_src

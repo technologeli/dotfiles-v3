@@ -11,7 +11,8 @@ augroup END
 " Markdown writing
 augroup wiki
   autocmd!
-  autocmd FileType markdown     setlocal wrap nornu nonumber breakindent formatoptions=1 lbr colorcolumn=0
-  autocmd FileType markdown     nnoremap <silent> j gj
-  autocmd FileType markdown     nnoremap <silent> k gk
+  autocmd FileType vimwiki     setlocal wrap nornu nonumber breakindent formatoptions=1 lbr colorcolumn=0
+  autocmd FileType vimwiki     nnoremap <silent> j gj
+  autocmd FileType vimwiki     nnoremap <silent> k gk
+  autocmd FileType vimwiki     GitGutterDisable
 augroup END
