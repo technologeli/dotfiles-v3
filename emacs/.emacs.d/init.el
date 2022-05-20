@@ -4,6 +4,17 @@
 (defvar eli/default-font "FiraCode Nerd Font")
 (defvar eli/default-variable-font "Ubuntu")
 
+(setq gc-cons-threshold (* 50 1000 1000))
+
+(defun eli/display-startup-time ()
+  (message "Emacs loaded in %s with %d garbage collections."
+           (format "%.2f seconds"
+                   (float-time
+                     (time-subtract after-init-time before-init-time)))
+           gcs-done))
+
+(add-hook 'emacs-startup-hook #'eli/display-startup-time)
+
 (require 'package)
 
 (setq package-archives '(("melpa" . "https://melpa.org/packages/")
@@ -133,9 +144,10 @@
     "r"  '(counsel-recentf :which-key "recent files")))
 
 (use-package which-key
-  :init (which-key-mode)
+  :defer 0
   :diminish which-key-mode
   :config
+  (which-key-mode)
   (setq which-key-idle-delay 0.2))
 
 ;; Ivy, Swiper, and Counsel are designed to work well together.
@@ -160,6 +172,7 @@
 
 ;; Provides context within the minibuffer
 (use-package ivy-rich
+  :after ivy
   :init
   (ivy-rich-mode 1))
 
@@ -168,7 +181,9 @@
 	 ("C-x b" . counsel-ibuffer)
 	 ("C-x C-f" . counsel-find-file)
 	 :map minibuffer-local-map
-	 ("C-r" . 'counsel-minibuffer-history)))
+	 ("C-r" . 'counsel-minibuffer-history))
+  :config
+  (counsel-mode 1))
 
 (use-package helpful
   :commands (helpful-callable helpful-variable helpful-command helpful-key)
@@ -180,6 +195,15 @@
   ([remap describe-command] . helpful-command)
   ([remap describe-variable] . counsel-describe-variable)
   ([remap describe-key] . helpful-key))
+
+(use-package ivy-prescient
+  :after counsel
+  :custom
+  (ivy-prescient-enable-filtering nil)
+  :config
+  ;; Uncomment the following line to have sorting remembered across sessions!
+  ;(prescient-persist-mode 1)
+  (ivy-prescient-mode 1))
 
 ;; C-c p f projectile-find-file
 ;; C-c p s r counsel-projectile-rg (use C-c o to move this into a buffer)
@@ -200,15 +224,17 @@
   :config (counsel-projectile-mode))
 
 (use-package magit
+  :commands magit-status
   :custom
   (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
 (eli/leader-keys
   "g" '(magit-status :which-key "magit"))
 
-(org-babel-do-load-languages
-  'org-babel-load-languages
-  '((emacs-lisp . t)
-    (python . t)))
+(with-eval-after-load 'org
+  (org-babel-do-load-languages
+    'org-babel-load-languages
+    '((emacs-lisp . t)
+      (python . t))))
 
 ;; Tangle config.org when we save it
 (defun eli/org-babel-tangle-config ()
@@ -230,6 +256,8 @@
                              (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•")))))))
 
 (use-package org
+  :pin org
+  :commands (org-capture org-agenda)
   :hook (org-mode . eli/org-mode-setup)
   :config
   (setq org-ellipsis " ▾")
@@ -264,10 +292,11 @@
 (use-package visual-fill-column
   :hook (org-mode . eli/org-mode-visual-fill))
 
-(require 'org-tempo)
-(add-to-list 'org-structure-template-alist '("sh" . "src shell"))
-(add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp"))
-(add-to-list 'org-structure-template-alist '("py" . "src python"))
+(with-eval-after-load 'org
+  (require 'org-tempo)
+  (add-to-list 'org-structure-template-alist '("sh" . "src shell"))
+  (add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp"))
+  (add-to-list 'org-structure-template-alist '("py" . "src python")))
 
 (use-package lsp-mode
   :commands (lsp lsp-deferred)
@@ -284,7 +313,8 @@
 (use-package lsp-treemacs
   :after lsp)
 
-(use-package lsp-ivy)
+(use-package lsp-ivy
+  :after lsp)
 
 (eli/leader-keys
   "tt" '(treemacs :which-key "filetree")
@@ -313,6 +343,7 @@
   :hook (python-mode . lsp-deferred))
 
 (use-package term
+  :commands term
   :config
   (setq explicit-shell-file-name "fish")
   (setq term-prompt-regexp "^[^#$%>\n]*[#$%>] *"))
@@ -340,7 +371,8 @@
 (eli/leader-keys
   "d" '(dired :which-key "dired"))
 
-(use-package dired-single)
+(use-package dired-single
+  :after dired)
 
 (use-package all-the-icons-dired
   :hook (dired-mode . all-the-icons-dired-mode))
@@ -350,3 +382,5 @@
   :config
   (evil-collection-define-key 'normal 'dired-mode-map
     "H" 'dired-hide-dotfiles-mode))
+
+(setq gc-cons-threshold (* 2 1000 1000))
