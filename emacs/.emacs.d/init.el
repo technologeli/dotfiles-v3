@@ -1,4 +1,4 @@
-(defvar eli/default-font-size 120)
+(defvar eli/default-font-size 140)
 (defvar eli/default-variable-font-size 140)
 (defvar eli/frame-transparency '(90 . 90))
 (defvar eli/default-font "FiraCode Nerd Font")
@@ -18,7 +18,7 @@
 (require 'package)
 
 (setq package-archives '(("melpa" . "https://melpa.org/packages/")
-                         ("org" . "https://orgmode.org/elpa/")
+                         ("nongnu" . "https://elpa.nongnu.org/nongnu/")
                          ("elpa" . "https://elpa.gnu.org/packages/")))
 
 (package-initialize)
@@ -90,6 +90,9 @@
 
 (set-face-attribute 'variable-pitch nil :font eli/default-variable-font :height eli/default-variable-font-size :weight 'regular)
 
+(setq org-format-latex-options '(:foreground default :background default :scale 2.0 :html-foreground "Black" :html-background "Transparent" :html-scale 1.0 :matchers
+           ("begin" "$1" "$" "$$" "\\(" "\\[")))
+
 (recentf-mode 1)
 (setq history-length 10)
 (savehist-mode 1)
@@ -140,8 +143,9 @@
   (eli/leader-keys
     "t"  '(:ignore t :which-key "toggles")
     "tc" '(counsel-load-theme :which-key "choose theme")
+    "tl" '(org-latex-preview :which-key "toggle latex preview")
     "b"  '(counsel-ibuffer :which-key "buffer")
-    "r"  '(counsel-recentf :which-key "recent files")))
+    "R"  '(counsel-recentf :which-key "recent files")))
 
 (use-package which-key
   :defer 0
@@ -155,18 +159,18 @@
 (use-package ivy
   :diminish ;; Hides ivy-mode in the list of modes in the modeline
   :bind (("C-s" . swiper)
-	 :map ivy-minibuffer-map
-	 ("TAB" . ivy-alt-done)
-	 ("C-l" . ivy-alt-done)
-	 ("C-j" . ivy-next-line)
-	 ("C-k" . ivy-previous-line)
-	 :map ivy-switch-buffer-map
-	 ("C-k" . ivy-previous-line)
-	 ("C-l" . ivy-done)
-	 ("C-d" . ivy-switch-buffer-kill)
-	 :map ivy-reverse-i-search-map
-	 ("C-k" . ivy-previous-line)
-	 ("C-d" . ivy-reverse-i-search-kill))
+         :map ivy-minibuffer-map
+         ("TAB" . ivy-alt-done)
+         ("C-l" . ivy-alt-done)
+         ("C-j" . ivy-next-line)
+         ("C-k" . ivy-previous-line)
+         :map ivy-switch-buffer-map
+         ("C-k" . ivy-previous-line)
+         ("C-l" . ivy-done)
+         ("C-d" . ivy-switch-buffer-kill)
+         :map ivy-reverse-i-search-map
+         ("C-k" . ivy-previous-line)
+         ("C-d" . ivy-reverse-i-search-kill))
   :config
   (ivy-mode 1))
 
@@ -178,10 +182,10 @@
 
 (use-package counsel
   :bind (("M-x" . counsel-M-x)
-	 ("C-x b" . counsel-ibuffer)
-	 ("C-x C-f" . counsel-find-file)
-	 :map minibuffer-local-map
-	 ("C-r" . 'counsel-minibuffer-history))
+         ("C-x b" . counsel-ibuffer)
+         ("C-x C-f" . counsel-find-file)
+         :map minibuffer-local-map
+         ("C-r" . 'counsel-minibuffer-history))
   :config
   (counsel-mode 1))
 
@@ -202,7 +206,7 @@
   (ivy-prescient-enable-filtering nil)
   :config
   ;; Uncomment the following line to have sorting remembered across sessions!
-  ;(prescient-persist-mode 1)
+  (prescient-persist-mode 1)
   (ivy-prescient-mode 1))
 
 ;; C-c p f projectile-find-file
@@ -217,7 +221,7 @@
   ;; :init
   ;; (when (file-directory-p "~/Projects/Code")
   ;;   (setq projectile-project-search-path '("~/Projects/Code")))
-  ;; (setq projectile-switch-project-action #'projectile-dired))
+  ;; (setq projectile-switch-project-action #'projectile-dired)
 
 (use-package counsel-projectile
   :after projectile
@@ -256,7 +260,6 @@
                              (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•")))))))
 
 (use-package org
-  :pin org
   :commands (org-capture org-agenda)
   :hook (org-mode . eli/org-mode-setup)
   :config
@@ -268,7 +271,7 @@
   (setq org-log-into-drawer t)
 
   (setq org-agenda-files
-	'("" ""))
+        '("" ""))
   (eli/org-font-setup))
 
 (eli/leader-keys
@@ -297,6 +300,31 @@
   (add-to-list 'org-structure-template-alist '("sh" . "src shell"))
   (add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp"))
   (add-to-list 'org-structure-template-alist '("py" . "src python")))
+
+(use-package org-roam
+  :custom
+  (org-roam-directory "~/wikeli")
+  (org-roam-completion-everywhere t)
+  :bind (("C-c n l" . org-roam-buffer-toggle)
+         ("C-c n f" . org-roam-node-find)
+         ("C-c n i" . org-roam-node-insert)
+         :map org-mode-map
+         ("C-M-i" . completion-at-point))
+  :config
+  (org-roam-setup)
+  (setq org-link-frame-setup '((vm . vm-visit-folder-other-frame)
+                              (vm.imap . vm-visit-imap-folder-other-frame)
+                              (gnus . org-gnus-no-new-news)
+                              (file . find-file)
+                              (wl . wl-other-frame))))
+
+(eli/leader-keys
+  "r" '(:ignore r :which-key "org-roam")
+  "rh" '(org-mark-ring-goto :which-key "buffer-toggle")
+  "rl" '(org-mark-ring-goto -1 :which-key "buffer-toggle")
+  "rt" '(org-roam-buffer-toggle :which-key "buffer-toggle")
+  "rf" '(org-roam-node-find :which-key "node-find")
+  "ri" '(org-roam-node-insert :which-key "node-insert"))
 
 (use-package lsp-mode
   :commands (lsp lsp-deferred)
@@ -329,9 +357,9 @@
   :hook (lsp-mode . company-mode)
   :bind
   (:map company-active-map
-	("<tab>" . company-complete-section))
+        ("<tab>" . company-complete-section))
   (:map lsp-mode-map
-	("<tab>" . company-indent-or-complete-common))
+        ("<tab>" . company-indent-or-complete-common))
   :custom
   (company-minimum-prefix-length 1)
   (company-idle-delay 0.0))
