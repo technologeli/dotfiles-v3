@@ -351,6 +351,8 @@ For remembering frequent selections
     ;; (when (file-directory-p "~/Projects/Code")
     ;;   (setq projectile-project-search-path '("~/Projects/Code")))
     ;; (setq projectile-switch-project-action #'projectile-dired)
+  (eli/leader-keys
+    "p" '(:keymap projectile-command-map :package projectile :which-key "projectile"))
 
 #+end_src
 
@@ -505,14 +507,39 @@ Forge integrates GitHub features into emacs, such as issues.
            ("C-c n f" . org-roam-node-find)
            ("C-c n i" . org-roam-node-insert)
            :map org-mode-map
-           ("C-M-i" . completion-at-point))
+           ("C-M-i" . completion-at-point)
+           :map org-roam-dailies-map
+           ("Y" . org-roam-dailies-capture-yesterday)
+           ("T" . org-roam-dailies-capture-tomorrow))
+    :bind-keymap
+    ("C-c n d" . org-roam-dailies-map)
     :config
-    (org-roam-setup)
+    (require 'org-roam-dailies)
+    (org-roam-db-autosync-mode)
+    (setq org-roam-dailies-directory "journal/")
     (setq org-link-frame-setup '((vm . vm-visit-folder-other-frame)
                                 (vm.imap . vm-visit-imap-folder-other-frame)
                                 (gnus . org-gnus-no-new-news)
                                 (file . find-file)
                                 (wl . wl-other-frame))))
+
+#+end_src
+
+*** Insert Immediate
+
+#+begin_src emacs-lisp
+
+(defun org-roam-node-insert-immediate (arg &rest args)
+  (interactive "P")
+  (let ((args (cons arg args))
+        (org-roam-capture-templates (list (append (car org-roam-capture-templates)
+                                                  '(:immediate-finish t)))))
+    (apply #'org-roam-node-insert args)))
+  
+#+end_src
+
+*** Roam Keybinds
+#+begin_src emacs-lisp
 
   (eli/leader-keys
     "r" '(:ignore r :which-key "org-roam")
@@ -520,11 +547,14 @@ Forge integrates GitHub features into emacs, such as issues.
     "rl" '(org-mark-ring-goto -1 :which-key "buffer-toggle")
     "rt" '(org-roam-buffer-toggle :which-key "buffer-toggle")
     "rf" '(org-roam-node-find :which-key "node-find")
-    "ri" '(org-roam-node-insert :which-key "node-insert"))
+    "ri" '(org-roam-node-insert :which-key "node-insert")
+    "rI" '(org-roam-node-insert-immediate :which-key "node-insert-immediate")
+    "ro" '(org-open-at-point :which-key "open-at-point")
+    "rd" '(:keymap org-roam-dailies-map :package org-roam :which-key "dailies"))
 
 #+end_src
 
-* LSP
+* lsp
 
 #+begin_src emacs-lisp
 
