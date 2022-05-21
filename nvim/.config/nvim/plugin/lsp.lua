@@ -86,6 +86,10 @@ require'lspconfig'.vimls.setup {
   capabilities = capabilities
 }
 
+require'lspconfig'.clangd.setup {
+  capabilities = capabilities
+}
+
 --[[
 require'lspconfig'.tsserver.setup {
   capabilities = capabilities
@@ -96,10 +100,6 @@ require'lspconfig'.bashls.setup {
 }
 
 require'lspconfig'.tailwindcss.setup {
-  capabilities = capabilities
-}
-
-require'lspconfig'.clangd.setup {
   capabilities = capabilities
 }
 

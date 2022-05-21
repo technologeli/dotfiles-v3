@@ -32,6 +32,7 @@
 (require 'use-package)
 ;; ensures packages are always downloaded
 (setq use-package-always-ensure t)
+(setq use-package-verbose t)
 
 (use-package auto-package-update
   :custom
@@ -145,6 +146,13 @@
     "tc" '(counsel-load-theme :which-key "choose theme")
     "tl" '(org-latex-preview :which-key "toggle latex preview")
     "b"  '(counsel-ibuffer :which-key "buffer")
+    "w"  '(:ignore w :which-key "window")
+    "wh"  '(evil-window-left :which-key "window-left")
+    "wj"  '(evil-window-down :which-key "window-down")
+    "wk"  '(evil-window-up :which-key "window-up")
+    "wl"  '(evil-window-right :which-key "window-right")
+    "wv"  '(evil-window-vsplit :which-key "window-vsplit")
+    "wf"  '(delete-other-windows :which-key "window-fullscreen")
     "R"  '(counsel-recentf :which-key "recent files")))
 
 (use-package which-key
@@ -261,6 +269,9 @@
                           '(("^ *\\([-]\\) "
                              (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•")))))))
 
+(defvar eli/org-agenda-files '("~/wikeli/20220521061448-agenda.org"
+                               "~/wikeli/20220521082425-archive.org"))
+
 (use-package org
   :commands (org-capture org-agenda)
   :hook (org-mode . eli/org-mode-setup)
@@ -272,17 +283,53 @@
   (setq org-log-done 'time)
   (setq org-log-into-drawer t)
 
-  (setq org-agenda-files
-        '("" ""))
+  (setq org-agenda-files eli/org-agenda-files)
+
+  (setq org-refile-targets
+    '(("~/wikeli/20220521082425-archive.org" :maxlevel . 1)))
+
+  ;; Save Org buffers after refiling
+  (advice-add 'org-refile :after 'org-save-all-org-buffers)
+
+  (setq org-tag-alist
+     '((:startgroup)
+        ;; mutually exclusive tags
+       (:endgroup)
+       ("project" . ?p)
+       ))
+
+  (setq org-todo-keywords
+    '((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d!)")))
+
+  (setq org-agenda-custom-commands
+    '(("d" "Dashboard"
+       ((agenda "" ((org-deadline-warning-days 14)))
+         (todo "NEXT"
+           ((org-agenda-overriding-header "Next Tasks")))))))
+
+  (setq org-capture-templates
+    `(("t" "Task" entry (file+olp "~/wikeli/20220521061448-agenda.org" "Inbox")
+            "* TODO %?\n  %U\n  %a\n  %i" :empty-lines 1)))
+
+  (require 'org-habit)
+  (add-to-list 'org-modules 'org-habit)
+  (setq org-habit-graph-column 60)
+
   (eli/org-font-setup))
 
 (eli/leader-keys
   "o"  '(:ignore o :which-key "org")
-  "ot" '(org-todo :which-key "org-todo")
-  "oi" '(org-time-stamp :which-key "org-time-stamp")
-  "og" '(counsel-org-tag :which-key "counsel-org-tag")
   "oa" '(org-agenda :which-key "org-agenda")
-  "os" '(org-schedule :which-key "org-schedule"))
+  "oc" '(org-ctrl-c-ctrl-c :which-key "c c")
+  "od" '(org-deadline :which-key "org-deadline")
+  "og" '(counsel-org-tag :which-key "counsel-org-tag")
+  "oi" '(org-time-stamp :which-key "org-time-stamp")
+  "ol" '(org-agenda-list :which-key "org-agenda-list")
+  "oo" '(org-capture :which-key "org-capture")
+  "op" '(org-set-property :which-key "org-set-property")
+  "or" '(org-refile :which-key "org-refile")
+  "os" '(org-schedule :which-key "org-schedule")
+  "ot" '(org-todo :which-key "org-todo"))
 
 (use-package org-bullets
   :hook (org-mode . org-bullets-mode)
@@ -303,29 +350,42 @@
   (add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp"))
   (add-to-list 'org-structure-template-alist '("py" . "src python")))
 
+(defun eli/org-roam-filter-by-tag (tag-name)
+  (lambda (node)
+    (member tag-name (org-roam-node-tags node))))
+
+(defun eli/org-roam-list-notes-by-tag (tag-name)
+  (mapcar #'org-roam-node-file
+          (seq-filter
+           (eli/org-roam-filter-by-tag tag-name)
+           (org-roam-node-list))))
+
 (use-package org-roam
+  :commands (org-capture org-agenda)
   :custom
   (org-roam-directory "~/wikeli")
   (org-roam-completion-everywhere t)
-  :bind (("C-c n l" . org-roam-buffer-toggle)
-         ("C-c n f" . org-roam-node-find)
-         ("C-c n i" . org-roam-node-insert)
-         :map org-mode-map
-         ("C-M-i" . completion-at-point)
-         :map org-roam-dailies-map
-         ("Y" . org-roam-dailies-capture-yesterday)
-         ("T" . org-roam-dailies-capture-tomorrow))
-  :bind-keymap
-  ("C-c n d" . org-roam-dailies-map)
   :config
+  (message "Loading Roam")
   (require 'org-roam-dailies)
   (org-roam-db-autosync-mode)
+
+  (setq org-agenda-files
+    (append eli/org-agenda-files
+      (eli/org-roam-list-notes-by-tag "project")))
+
+  (setq org-roam-node-display-template
+    (concat "${title:40} "
+      (propertize "${tags:*}" 'face 'org-tag)))
+
   (setq org-roam-dailies-directory "journal/")
   (setq org-link-frame-setup '((vm . vm-visit-folder-other-frame)
-                              (vm.imap . vm-visit-imap-folder-other-frame)
-                              (gnus . org-gnus-no-new-news)
-                              (file . find-file)
-                              (wl . wl-other-frame))))
+                               (vm.imap . vm-visit-imap-folder-other-frame)
+                               (gnus . org-gnus-no-new-news)
+                               (file . find-file)
+                               (wl . wl-other-frame))))
+
+(general-define-key :keymaps 'org-mode-map "C-M-i" 'completion-at-point)
 
 (defun org-roam-node-insert-immediate (arg &rest args)
   (interactive "P")
@@ -343,6 +403,8 @@
   "ri" '(org-roam-node-insert :which-key "node-insert")
   "rI" '(org-roam-node-insert-immediate :which-key "node-insert-immediate")
   "ro" '(org-open-at-point :which-key "open-at-point")
+  "rdY" '(org-roam-dailies-capture-yesterday :which-key "capture-yesterday")
+  "rdT" '(org-roam-dailies-capture-tomorrow :which-key "capture-tomorrow")
   "rd" '(:keymap org-roam-dailies-map :package org-roam :which-key "dailies"))
 
 (use-package lsp-mode
