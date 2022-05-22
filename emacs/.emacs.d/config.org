@@ -52,7 +52,7 @@
   (require 'use-package)
   ;; ensures packages are always downloaded
   (setq use-package-always-ensure t)
-  (setq use-package-verbose t)
+  ;; (setq use-package-verbose t)
 
 #+end_src
 
@@ -150,6 +150,31 @@
 
 Depends on =texlive-latex-base=, =texlive-latex-extra=, =dvipng=.
 
+** Dashboard
+
+#+begin_src emacs-lisp
+
+  (use-package dashboard
+    :config
+    (dashboard-setup-startup-hook)
+    (setq dashboard-banner-logo-title "Welcome, Eli.")
+    (setq dashboard-set-heading-icons t)
+    (setq dashboard-set-file-icons t)
+    (setq dashboard-startup-banner 'logo)
+    (setq dashboard-set-footer nil)
+    (setq dashboard-projects-switch-function 'counsel-projectile-switch-project-by-name)
+    (setq dashboard-item-names '(("Agenda for the coming week:" . "Agenda:")))
+    (setq dashboard-center-content t)
+    (setq dashboard-items '((recents  . 5)
+                            (projects . 5)
+                            (agenda . 5))))
+
+  (defun eli/goto-dashboard ()
+    (interactive)
+    (switch-to-buffer "*dashboard*"))
+
+#+end_src
+
 * Persistent History
 
 #+begin_src emacs-lisp
@@ -234,6 +259,7 @@ Depends on =texlive-latex-base=, =texlive-latex-extra=, =dvipng=.
       :prefix "SPC"
       :global-prefix "C-SPC")
     (eli/leader-keys
+      "h"  '(eli/goto-dashboard :which-key "homepage")
       "t"  '(:ignore t :which-key "toggles")
       "tc" '(counsel-load-theme :which-key "choose theme")
       "tl" '(org-latex-preview :which-key "toggle latex preview")
