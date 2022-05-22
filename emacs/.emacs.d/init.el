@@ -1,5 +1,5 @@
-(defvar eli/default-font-size 140)
-(defvar eli/default-variable-font-size 140)
+(defvar eli/default-font-size 130)
+(defvar eli/default-variable-font-size 130)
 (defvar eli/frame-transparency '(90 . 90))
 (defvar eli/default-font "FiraCode Nerd Font")
 (defvar eli/default-variable-font "Fira Sans Book")
@@ -71,7 +71,7 @@
 
 (use-package doom-themes
   :config
-  (load-theme 'doom-one t)
+  (load-theme 'doom-gruvbox t)
 
   ;; Corrects (and improves) org-mode's native fontification.
   (doom-themes-org-config))
@@ -264,24 +264,19 @@
 
 (add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'eli/org-babel-tangle-config)))
 
-(defun eli/org-mode-setup()
-  (org-indent-mode)
-  (variable-pitch-mode 1)
-  (visual-line-mode 1))
-
 (defun eli/org-font-setup ()
   (font-lock-add-keywords 'org-mode
-                          '(("^ *\\([-]\\) "
-                             (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
+			  '(("^ *\\([-]\\) "
+			     (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
 ;; Set faces for heading levels
 (dolist (face '((org-level-1 . 1.2)
-                (org-level-2 . 1.1)
-                (org-level-3 . 1.05)
-                (org-level-4 . 1.0)
-                (org-level-5 . 1.1)
-                (org-level-6 . 1.1)
-                (org-level-7 . 1.1)
-                (org-level-8 . 1.1)))
+		(org-level-2 . 1.1)
+		(org-level-3 . 1.0)
+		(org-level-4 . 1.0)
+		(org-level-5 . 1.0)
+		(org-level-6 . 1.0)
+		(org-level-7 . 1.0)
+		(org-level-8 . 1.0)))
   (set-face-attribute (car face) nil :font eli/default-variable-font :weight 'regular :height (cdr face)))
 
 ;; Ensure that anything that should be fixed-pitch in Org files appears that way
@@ -293,8 +288,14 @@
 (set-face-attribute 'org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
 (set-face-attribute 'org-checkbox nil :inherit 'fixed-pitch))
 
+(defun eli/org-mode-setup()
+  (org-indent-mode)
+  (variable-pitch-mode 1)
+  (visual-line-mode 1)
+  (eli/org-font-setup))
+
 (defvar eli/org-agenda-files '("~/wikeli/20220521061448-agenda.org"
-                               "~/wikeli/20220521082425-archive.org"))
+			       "~/wikeli/20220521082425-archive.org"))
 
 (use-package org
   :commands (org-capture org-agenda)
@@ -317,7 +318,7 @@
 
   (setq org-tag-alist
      '((:startgroup)
-        ;; mutually exclusive tags
+	;; mutually exclusive tags
        (:endgroup)
        ("project" . ?p)
        ))
@@ -328,18 +329,16 @@
   (setq org-agenda-custom-commands
     '(("d" "Dashboard"
        ((agenda "" ((org-deadline-warning-days 14)))
-         (todo "NEXT"
-           ((org-agenda-overriding-header "Next Tasks")))))))
+	 (todo "NEXT"
+	   ((org-agenda-overriding-header "Next Tasks")))))))
 
   (setq org-capture-templates
     `(("t" "Task" entry (file+olp "~/wikeli/20220521061448-agenda.org" "Inbox")
-            "* TODO %?\n  %U\n  %a\n  %i" :empty-lines 1)))
+	    "* TODO %?\n  %U\n  %a\n  %i" :empty-lines 1)))
 
   (require 'org-habit)
   (add-to-list 'org-modules 'org-habit)
-  (setq org-habit-graph-column 60)
-
-  (eli/org-font-setup))
+  (setq org-habit-graph-column 60))
 
 (eli/leader-keys
   "o"  '(:ignore o :which-key "org")
