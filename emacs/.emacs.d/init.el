@@ -2,7 +2,7 @@
 (defvar eli/default-variable-font-size 140)
 (defvar eli/frame-transparency '(90 . 90))
 (defvar eli/default-font "FiraCode Nerd Font")
-(defvar eli/default-variable-font "Ubuntu")
+(defvar eli/default-variable-font "Fira Sans Book")
 
 (setq gc-cons-threshold (* 50 1000 1000))
 
@@ -86,6 +86,8 @@
 (use-package rainbow-delimiters
   :hook (prog-mode . rainbow-delimiters-mode))
 
+;; 한국!
+(set-fontset-font "fontset-default" 'hangul "Noto Sans CJK KR Regular")
 (set-face-attribute 'default nil :font eli/default-font :height eli/default-font-size)
 (set-face-attribute 'fixed-pitch nil :font eli/default-font :height eli/default-font-size)
 
@@ -146,6 +148,8 @@
     "tc" '(counsel-load-theme :which-key "choose theme")
     "tl" '(org-latex-preview :which-key "toggle latex preview")
     "b"  '(counsel-ibuffer :which-key "buffer")
+    "H"  '(previous-buffer :which-key "previous-buffer")
+    "L"  '(next-buffer :which-key "next-buffer")
     "w"  '(:ignore w :which-key "window")
     "wh"  '(evil-window-left :which-key "window-left")
     "wj"  '(evil-window-down :which-key "window-down")
@@ -262,12 +266,32 @@
 
 (defun eli/org-mode-setup()
   (org-indent-mode)
+  (variable-pitch-mode 1)
   (visual-line-mode 1))
 
 (defun eli/org-font-setup ()
   (font-lock-add-keywords 'org-mode
                           '(("^ *\\([-]\\) "
-                             (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•")))))))
+                             (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
+;; Set faces for heading levels
+(dolist (face '((org-level-1 . 1.2)
+                (org-level-2 . 1.1)
+                (org-level-3 . 1.05)
+                (org-level-4 . 1.0)
+                (org-level-5 . 1.1)
+                (org-level-6 . 1.1)
+                (org-level-7 . 1.1)
+                (org-level-8 . 1.1)))
+  (set-face-attribute (car face) nil :font eli/default-variable-font :weight 'regular :height (cdr face)))
+
+;; Ensure that anything that should be fixed-pitch in Org files appears that way
+(set-face-attribute 'org-block nil :foreground nil :inherit 'fixed-pitch)
+(set-face-attribute 'org-code nil   :inherit '(shadow fixed-pitch))
+(set-face-attribute 'org-table nil   :inherit '(shadow fixed-pitch))
+(set-face-attribute 'org-verbatim nil :inherit '(shadow fixed-pitch))
+(set-face-attribute 'org-special-keyword nil :inherit '(font-lock-comment-face fixed-pitch))
+(set-face-attribute 'org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
+(set-face-attribute 'org-checkbox nil :inherit 'fixed-pitch))
 
 (defvar eli/org-agenda-files '("~/wikeli/20220521061448-agenda.org"
                                "~/wikeli/20220521082425-archive.org"))
@@ -299,7 +323,7 @@
        ))
 
   (setq org-todo-keywords
-    '((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d!)")))
+    '((sequence "TODO(t)" "NEXT(n)" "IDEA(i)" "|" "DONE(d!)")))
 
   (setq org-agenda-custom-commands
     '(("d" "Dashboard"
@@ -324,7 +348,7 @@
   "od" '(org-deadline :which-key "org-deadline")
   "og" '(counsel-org-tag :which-key "counsel-org-tag")
   "oi" '(org-time-stamp :which-key "org-time-stamp")
-  "ol" '(org-agenda-list :which-key "org-agenda-list")
+  "ol" '(org-insert-link :which-key "org-insert-link")
   "oo" '(org-capture :which-key "org-capture")
   "op" '(org-set-property :which-key "org-set-property")
   "or" '(org-refile :which-key "org-refile")
@@ -396,8 +420,6 @@
 
 (eli/leader-keys
   "r" '(:ignore r :which-key "org-roam")
-  "rh" '(org-mark-ring-goto :which-key "buffer-toggle")
-  "rl" '(org-mark-ring-goto -1 :which-key "buffer-toggle")
   "rt" '(org-roam-buffer-toggle :which-key "buffer-toggle")
   "rf" '(org-roam-node-find :which-key "node-find")
   "ri" '(org-roam-node-insert :which-key "node-insert")
