@@ -86,12 +86,21 @@
 (use-package rainbow-delimiters
   :hook (prog-mode . rainbow-delimiters-mode))
 
-;; 한국!
-(set-fontset-font "fontset-default" 'hangul "Noto Sans CJK KR Regular")
-(set-face-attribute 'default nil :font eli/default-font :height eli/default-font-size)
-(set-face-attribute 'fixed-pitch nil :font eli/default-font :height eli/default-font-size)
+(defun eli/set-font-faces ()
+  ;; 한국!
+  (set-fontset-font "fontset-default" 'hangul "Noto Sans CJK KR Regular")
+  (set-face-attribute 'default nil :font eli/default-font :height eli/default-font-size)
+  (set-face-attribute 'fixed-pitch nil :font eli/default-font :height eli/default-font-size)
 
-(set-face-attribute 'variable-pitch nil :font eli/default-variable-font :height eli/default-variable-font-size :weight 'regular)
+  (set-face-attribute 'variable-pitch nil :font eli/default-variable-font :height eli/default-variable-font-size :weight 'regular))
+
+(if (daemonp)
+  (add-hook 'after-make-frame-functions
+    (lambda (frame)
+      (setq doom-modeline-icon t)
+      (with-selected-frame frame
+      (eli/set-font-faces))))
+  (eli/set-font-faces))
 
 (setq org-format-latex-options '(:foreground default :background default :scale 2.0 :html-foreground "Black" :html-background "Transparent" :html-scale 1.0 :matchers
            ("begin" "$1" "$" "$$" "\\(" "\\[")))
@@ -107,6 +116,7 @@
   (setq dashboard-projects-switch-function 'counsel-projectile-switch-project-by-name)
   (setq dashboard-item-names '(("Agenda for the coming week:" . "Agenda:")))
   (setq dashboard-center-content t)
+  (setq initial-buffer-choice (lambda () (get-buffer "*dashboard*")))
   (setq dashboard-items '((recents  . 5)
                           (projects . 5)
                           (agenda . 5))))
