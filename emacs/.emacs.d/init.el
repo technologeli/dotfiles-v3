@@ -81,7 +81,7 @@
 
 (use-package doom-modeline
   :init (doom-modeline-mode 1)
-  :custom ((doom-modeline-height 40)))
+  :custom ((doom-modeline-height 35)))
 
 (use-package rainbow-delimiters
   :hook (prog-mode . rainbow-delimiters-mode))
@@ -350,7 +350,7 @@
 
   (setq org-tag-alist
      '((:startgroup)
-	;; mutually exclusive tags
+        ;; mutually exclusive tags
        (:endgroup)
        ("project" . ?p)
        ))
@@ -361,12 +361,13 @@
   (setq org-agenda-custom-commands
     '(("d" "Dashboard"
        ((agenda "" ((org-deadline-warning-days 14)))
-	 (todo "NEXT"
-	   ((org-agenda-overriding-header "Next Tasks")))))))
+         (todo "NEXT"
+           ((org-agenda-overriding-header "Next Tasks")))))))
 
   (setq org-capture-templates
     `(("t" "Task" entry (file+olp "~/wikeli/20220521061448-agenda.org" "Inbox")
-	    "* TODO %?\n  %U\n  %a\n  %i" :empty-lines 1)))
+            "* TODO %?\n  %U\n  %a\n  %i" :empty-lines 1)
+      ("p" "Phrase" entry (file+olp "~/wikeli/20220523112202-words_and_phrases.org" "Unsorted") "* %?" :empty-lines 1)))
 
   (require 'org-habit)
   (add-to-list 'org-modules 'org-habit)
