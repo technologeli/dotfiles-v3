@@ -271,6 +271,7 @@ Depends on =texlive-latex-base=, =texlive-latex-extra=, =dvipng=.
       :global-prefix "C-SPC")
     (eli/leader-keys
       "h"  '(eli/goto-dashboard :which-key "homepage")
+      "v"  '(vterm :which-key "vterm")
       "t"  '(:ignore t :which-key "toggles")
       "tc" '(counsel-load-theme :which-key "choose theme")
       "tl" '(org-latex-preview :which-key "toggle latex preview")
@@ -686,8 +687,10 @@ Forge integrates GitHub features into emacs, such as issues.
 
 #+end_src
 
-* lsp
+* LSP
+The Language Server Protocol (LSP) is a protocol for programming languages to communicate with editors.
 
+** Configuration
 #+begin_src emacs-lisp
 
   (use-package lsp-mode
@@ -736,14 +739,14 @@ Forge integrates GitHub features into emacs, such as issues.
 
   (use-package company-box
     :hook (company-mode . company-box-mode))
-  
+
 #+end_src
 
 ** Languages
 
 *** Python
 
-Pyright must be installed.
+Depends on =pyright=.
 
 #+begin_src emacs-lisp
 

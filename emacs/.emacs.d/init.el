@@ -174,6 +174,7 @@
     :global-prefix "C-SPC")
   (eli/leader-keys
     "h"  '(eli/goto-dashboard :which-key "homepage")
+    "v"  '(vterm :which-key "vterm")
     "t"  '(:ignore t :which-key "toggles")
     "tc" '(counsel-load-theme :which-key "choose theme")
     "tl" '(org-latex-preview :which-key "toggle latex preview")
