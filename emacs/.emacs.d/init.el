@@ -86,6 +86,11 @@
 (use-package rainbow-delimiters
   :hook (prog-mode . rainbow-delimiters-mode))
 
+(use-package beacon
+  :custom (beacon-blink-duration 0.2)
+  :config
+  (beacon-mode 1))
+
 (defun eli/set-font-faces ()
   ;; 한국!
   (set-fontset-font "fontset-default" 'hangul "Noto Sans CJK KR Regular")

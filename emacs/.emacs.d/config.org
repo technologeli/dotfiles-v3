@@ -125,6 +125,11 @@
   (use-package rainbow-delimiters
     :hook (prog-mode . rainbow-delimiters-mode))
 
+  (use-package beacon
+    :custom (beacon-blink-duration 0.2)
+    :config
+    (beacon-mode 1))
+
 #+end_src
 
 ** Font Configuration
