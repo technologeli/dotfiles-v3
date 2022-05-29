@@ -36,6 +36,3 @@ alias .4='cd ../../../..'
 alias .5='cd ../../../../..'
 alias fzf='rg --hidden --files --ignore-file ~/.gitignore | fzf'
 #alias fzy='rg --hidden --files --ignore-file ~/.gitignore | fzy'
-
-# Package Management
-alias update='~/dotfiles-v3/update.sh'
