@@ -1,8 +1,8 @@
-" Neoformat
-augroup fmt
-  autocmd!
-  autocmd BufWritePre * Neoformat
-augroup END
+" Format
+"augroup fmt
+"  autocmd!
+"  autocmd BufWritePre * Neoformat
+"augroup END
 " Tabs for different languages
 augroup langs
   autocmd!

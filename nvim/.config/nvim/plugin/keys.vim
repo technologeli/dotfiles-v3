@@ -1,3 +1,6 @@
+" Format
+nnoremap <leader>n <cmd>lua vim.lsp.buf.formatting()<cr>
+
 " CTRL+Backspace to delete a full word
 inoremap <C-H> <C-W>
 " Mac variant (alt + backspace)
@@ -41,8 +44,8 @@ nnoremap <expr> j (v:count > 5 ? "m'" . v:count : "") . 'j'
 " Moving text
 vnoremap <silent> J :m '>+1<CR>gv=gv
 vnoremap <silent> K :m '<-2<CR>gv=gv
-inoremap <silent> <C-j> <esc>:m .+1<CR>==a
-inoremap <silent> <C-k> <esc>:m .-2<CR>==a
+"inoremap <silent> <C-j> <esc>:m .+1<CR>==a
+"inoremap <silent> <C-k> <esc>:m .-2<CR>==a
 nnoremap <silent> <leader>J :m .+1<CR>==
 nnoremap <silent> <leader>K :m .-2<CR>==
 
