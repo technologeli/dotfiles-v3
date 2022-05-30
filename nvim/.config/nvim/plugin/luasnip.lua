@@ -41,11 +41,14 @@ local fmt = require('luasnip.extras.fmt').fmt
 -- end
 
 -- use c-l to switch between choices
+
+-- All
 ls.add_snippets('all', {
   s('task', { c(1, {t "TODO", t "DONE"}) } ),
   s('curtime', f(function () return os.date "%D - %I:%M %p" end))
 })
 
+-- Lua
 ls.add_snippets('lua', {
   s('req', fmt("local {} = require('{}')", {
     f(function(import_name)
@@ -56,6 +59,7 @@ ls.add_snippets('lua', {
   }))
 })
 
+-- Typescript React
 ls.add_snippets('typescriptreact', {
   s('useState', fmt('const [{}, set{}] = useState({})', {
     i(1, 'value'),
@@ -65,6 +69,20 @@ ls.add_snippets('typescriptreact', {
       local rest = string.sub(var_name, 2, -1)
       return first_letter .. rest
     end, { 1 }),
+    i(0)
+  }))
+})
+
+-- Go
+ls.add_snippets('go', {
+  s('iferr', fmt(
+  [[
+  if {} != nil {{
+    return {}
+  }}
+  ]],
+  {
+    i(1, 'err'),
     i(0)
   }))
 })
