@@ -116,11 +116,11 @@ setKey('n', '<C-j>', '<cmd>cnext<cr>zz', nore)
 setKey('n', '<C-k>', '<cmd>cprev<cr>zz', nore)
 setKey('n', '<C-q>', '', {
   noremap = true,
-  callback = require('qfl').toggle
+  callback = require('eli.qfl').toggle
 })
 
 -- Scratch
 setKey('n', l('s'), '', {
   noremap = true,
-  callback = require('scratch').scratch
+  callback = require('eli.scratch').scratch
 })
