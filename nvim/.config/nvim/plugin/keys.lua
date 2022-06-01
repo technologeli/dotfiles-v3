@@ -62,9 +62,7 @@ setKey('n', l('rg'), '', {
 -- Format
 setKey('n', l('n'), '', {
   noremap = true,
-  callback = function()
-    vim.lsp.buf.formatting()
-  end
+  callback = vim.lsp.buf.formatting,
 })
 
 -- ctrl+backspace and mac variant
@@ -112,3 +110,17 @@ setKey('v', 'K', ":m '>-2<cr>gv=gv", nore_silent)
 -- setKey('i', '<C-k>', '<esc>:m .-2<cr>==a', nore_silent)
 -- setKey('n', l('J'), ':m .+1<cr>==', nore_silent)
 -- setKey('n', l('K'), ':m .-2<cr>==', nore_silent)
+
+-- Quickfix
+setKey('n', '<C-j>', '<cmd>cnext<cr>zz', nore)
+setKey('n', '<C-k>', '<cmd>cprev<cr>zz', nore)
+setKey('n', '<C-q>', '', {
+  noremap = true,
+  callback = require('qfl').toggle
+})
+
+-- Scratch
+setKey('n', l('s'), '', {
+  noremap = true,
+  callback = require('scratch').scratch
+})
