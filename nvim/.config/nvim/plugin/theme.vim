@@ -41,7 +41,7 @@ augroup END
 "highlight VimwikiHeader6 guifg=#e86671 gui=bold
 
 highlight TelescopeSelectionCaret guifg=#458588
-highlight TelescopeSelection      guifg=#a89984 gui=bold
+highlight TelescopeSelection      guifg=#d79921 gui=bold
 highlight TelescopeBorder         guifg=#b16286
 highlight TelescopeMatching       guifg=#d79921
 highlight TelescopePromptPrefix   guifg=#458588

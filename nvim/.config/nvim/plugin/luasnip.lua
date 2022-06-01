@@ -34,11 +34,11 @@ local d = ls.dynamic_node
 local fmt = require('luasnip.extras.fmt').fmt
 -- local rep = require('luasnip.extras').rep
 
--- local same = function (index)
---   return f(function (arg)
---     return arg[1]
---   end, { index })
--- end
+local same = function (index)
+  return f(function (arg)
+    return arg[1]
+  end, { index })
+end
 
 -- use c-l to switch between choices
 
@@ -56,12 +56,19 @@ ls.add_snippets('lua', {
       return parts[#parts] or ""
     end, { 1 }),
     i(1),
-  }))
+  })),
+  -- doesn't get more meta than this
+  s('snip', fmt("s('{}', fmt('{}', {{{}}})),", {
+    i(1), i(2), i(0),
+  })),
 })
 
 -- Typescript React
 ls.add_snippets('typescriptreact', {
-  s('useState', fmt('const [{}, set{}] = useState({})', {
+  s('imp', fmt("import {{ {} }} from '{}';", {
+    i(1), i(0)
+  })),
+  s('us', fmt('const [{}, set{}] = useState({});', {
     i(1, 'value'),
     f(function (tab)
       local var_name = tab[1][1]
@@ -70,7 +77,23 @@ ls.add_snippets('typescriptreact', {
       return first_letter .. rest
     end, { 1 }),
     i(0)
-  }))
+  })),
+  -- paired tag
+  s('pt', fmt('<{}>{}</{}>', {
+    i(1),
+    i(0),
+    f(function (import_name)
+      local parts = vim.split(import_name[1][1], ' ', true)
+      return parts[1] or ''
+    end, { 1 }),
+  })),
+  -- single tag
+  s('st', fmt('<{} />', { i(1) })),
+  s('comp', fmt('const {} = ({}) => {{\n}};\n\nexport default {};', {
+    i(1),
+    i(2),
+    same(1)
+  })),
 })
 
 -- Go

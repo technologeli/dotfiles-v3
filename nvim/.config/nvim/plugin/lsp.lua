@@ -17,7 +17,6 @@ cmp.setup({
     ['<C-Space>'] = cmp.mapping.complete(),
     ['<C-e>'] = cmp.mapping.close(),
     ['<C-y>'] = cmp.mapping.confirm({
-      behavior = cmp.ConfirmBehavior.Insert,
       select = true,
     }),
     ['<C-p>'] = cmp.mapping.select_prev_item(),

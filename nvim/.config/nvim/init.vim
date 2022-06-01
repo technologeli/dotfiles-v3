@@ -66,6 +66,11 @@ Plug 'folke/which-key.nvim'
 Plug 'vimwiki/vimwiki'
 Plug 'folke/zen-mode.nvim'
 
+" Formatting
+Plug 'sbdchd/neoformat'
+
 call plug#end()
+
+let g:neoformat_try_node_exe = 1
 
 let mapleader = ' '
