@@ -1,3 +1,8 @@
+local has_nvim_treesitter, _ = pcall(require, 'nvim-treesitter')
+if not has_nvim_treesitter then
+  return
+end
+
 require'nvim-treesitter.configs'.setup {
   ensure_installed = {
     "typescript", "tsx", "html", "json", "yaml",

@@ -22,6 +22,10 @@ ac('FileType', {
   group = langs
 })
 
+local has_harpoon, _ = pcall(require, 'harpoon')
+if not has_harpoon then
+  return
+end
 
 local harp= ag('harp', { clear = true })
 ac({ 'BufNewFile', 'BufReadPost', 'BufEnter' }, {

@@ -1,4 +1,8 @@
-local ls = require 'luasnip'
+local has_luasnip, ls = pcall(require, 'luasnip')
+if not has_luasnip then
+  return
+end
+
 local types = require 'luasnip.util.types'
 
 ls.config.set_config {
@@ -60,6 +64,19 @@ ls.add_snippets('lua', {
   -- doesn't get more meta than this
   s('snip', fmt("s('{}', fmt('{}', {{{}}})),", {
     i(1), i(2), i(0),
+  })),
+  s('preq', fmt([[
+  local has_{}, {} = pcall(require, '{}')
+  if {}has_{} then
+    {}
+  end
+  ]], {
+    i(1),
+    same(1),
+    same(1),
+    c(2, { t '', t 'not ' }),
+    same(1),
+    i(0)
   })),
 })
 

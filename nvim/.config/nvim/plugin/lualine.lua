@@ -1,11 +1,16 @@
-local mark = require'harpoon.mark'
+local harpoon = function () return '' end
 
-local function harpoon()
-  local m = mark.status()
-  if m == "" then
-    return m
-  else
-    return "H:" .. m
+local has_harpoon, _ = pcall(require, 'harpoon')
+if has_harpoon then
+  local mark = require'harpoon.mark'
+
+  harpoon = function ()
+    local m = mark.status()
+    if m == "" then
+      return m
+    else
+      return "H:" .. m
+    end
   end
 end
 

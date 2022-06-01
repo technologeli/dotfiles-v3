@@ -3,4 +3,7 @@ require('eli.plugins')
 vim.g.mapleader = ' '
 
 vim.g.neoformat_try_node_exe = 1
-require('nvim-tree').setup()
+local has_nvim_tree, nvim_tree = pcall(require, 'nvim-tree')
+if has_nvim_tree then
+  nvim_tree.setup()
+end

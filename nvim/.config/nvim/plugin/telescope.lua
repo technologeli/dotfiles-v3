@@ -1,5 +1,10 @@
+local has_telescope, telescope = pcall(require, 'telescope')
+if not has_telescope then
+  return
+end
+
 local actions = require'telescope.actions'
-require'telescope'.setup {
+telescope.setup {
   defaults = {
     vimgrep_arguments = {
       'rg',

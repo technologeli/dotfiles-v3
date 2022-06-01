@@ -1,14 +1,28 @@
-vim.cmd[[
-  let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy']
-]]
+vim.g.completion_matching_strategy_list = { 'exact', 'substring', 'fuzzy' }
 
 -- Setup nvim-cmp.
-local cmp = require'cmp'
+local has_cmp, cmp = pcall(require, 'cmp')
+if not has_cmp then return end
+
+local format = nil
+local has_lspkind, lspkind = pcall(require, 'lspkind')
+if has_lspkind then
+  format = lspkind.cmp_format({with_text = true, menu = ({
+    buffer = "[buf]",
+    nvim_lsp = "[LSP]",
+    nvim_lua = "[lua]",
+    luasnip = "[snip]",
+    path = "[path]",
+  })})
+end
 
 cmp.setup({
   snippet = {
     expand = function(args)
-      require('luasnip').lsp_expand(args.body)
+      local has_luasnip, luasnip = pcall(require, 'luasnip')
+      if has_luasnip then
+        luasnip.lsp_expand(args.body)
+      end
     end,
   },
   mapping = {
@@ -36,22 +50,19 @@ cmp.setup({
       end, commit_characters)
     end
   },
-  formatting = {
-    format = require("lspkind").cmp_format({with_text = true, menu = ({
-      buffer = "[buf]",
-      nvim_lsp = "[LSP]",
-      nvim_lua = "[lua]",
-      luasnip = "[snip]",
-      path = "[path]",
-    })})
-  },
+  formatting = { format = format  },
   experimental = {
     native_menu = false,
     ghost_text = true
   }
 })
 
-local capabilities = require'cmp_nvim_lsp'.update_capabilities(vim.lsp.protocol.make_client_capabilities())
+local capabilities = nil
+local has_cmp_nvim_lsp, cmp_nvim_lsp = pcall(require, 'cmp_nvim_lsp')
+if has_cmp_nvim_lsp then
+  capabilities = cmp_nvim_lsp.update_capabilities(vim.lsp.protocol.make_client_capabilities())
+end
+
 local on_attach = function ()
   -- use K again to go into the window
   vim.keymap.set("n", "K", vim.lsp.buf.hover, { buffer = 0 })
@@ -72,61 +83,61 @@ local on_attach = function ()
   vim.keymap.set("n", "<leader>c", vim.lsp.buf.code_action, { buffer = 0 })
 end
 
+local has_lspconfig, lspconfig = pcall(require, 'lspconfig')
+if not has_lspconfig then
+  return
+end
+
 -- Setup lspconfig.
-require'lspconfig'.pyright.setup {
+lspconfig.pyright.setup {
   capabilities = capabilities,
   on_attach = on_attach,
 }
 
-require'lspconfig'.vimls.setup {
+lspconfig.vimls.setup {
   capabilities = capabilities,
 }
 
-require'lspconfig'.clangd.setup {
+lspconfig.clangd.setup {
   capabilities = capabilities,
 }
 
-require'lspconfig'.gopls.setup {
-  capabilities = capabilities,
-  on_attach = on_attach,
-}
-
-require'lspconfig'.html.setup {
+lspconfig.gopls.setup {
   capabilities = capabilities,
   on_attach = on_attach,
 }
 
-require'lspconfig'.tsserver.setup {
+lspconfig.html.setup {
   capabilities = capabilities,
   on_attach = on_attach,
 }
 
-capabilities.textDocument.completion.completionItem.snippedSupport = true
-require'lspconfig'.cssls.setup {
+lspconfig.tsserver.setup {
   capabilities = capabilities,
   on_attach = on_attach,
 }
 
 local pid = vim.fn.getpid()
 local omnisharp_bin = "/home/eli/sources/omnisharp/run"
-require'lspconfig'.omnisharp.setup {
+lspconfig.omnisharp.setup {
   capabilities = capabilities,
   on_attach = on_attach,
   cmd = { omnisharp_bin, "--languageserver", "--hostPID", tostring(pid) };
 }
 
+
 --[[
 
-require'lspconfig'.bashls.setup {
+lspconfig.bashls.setup {
   capabilities = capabilities
 }
 
-require'lspconfig'.tailwindcss.setup {
+lspconfig.tailwindcss.setup {
   capabilities = capabilities
 }
 
 
-require'lspconfig'.prismals.setup {
+lspconfig.prismals.setup {
   capabilities = capabilities
 }
 
@@ -135,7 +146,8 @@ require'lspconfig'.prismals.setup {
 -- lua only on linux
 local sumneko_root_path = "/home/eli/lua-language-server"
 local sumneko_binary = sumneko_root_path.."/bin/lua-language-server"
-require'lspconfig'.sumneko_lua.setup {
+lspconfig.sumneko_lua.setup {
+  capabilities = capabilities,
   cmd = {sumneko_binary, "-E", sumneko_root_path .. "/main.lua"};
   settings = {
     Lua = {
@@ -162,4 +174,10 @@ require'lspconfig'.sumneko_lua.setup {
       },
     },
   },
+}
+
+capabilities.textDocument.completion.completionItem.snippetSupport = true
+lspconfig.cssls.setup {
+  capabilities = capabilities,
+  on_attach = on_attach,
 }

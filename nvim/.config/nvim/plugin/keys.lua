@@ -53,9 +53,12 @@ setKey('n', '<C-b>', c('Telescope buffers'), nore)
 setKey('n', l('rg'), '', {
   noremap = true,
   callback = function ()
-    require('telescope.builtin').grep_string({
-      search=vim.fn.input("Grep For > ")
-    })
+    local has_telescope, _ = pcall(require, 'telescope')
+    if has_telescope then
+      require('telescope.builtin').grep_string({
+        search=vim.fn.input("Grep For > ")
+      })
+    end
   end
 })
 
