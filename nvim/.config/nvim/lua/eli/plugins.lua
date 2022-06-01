@@ -45,7 +45,7 @@ return packer.startup(function (use)
 
   -- Treesitter
   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
-  use 'nvim-treesitter/playground'
+  use { 'nvim-treesitter/playground', opt = true, cmd = 'TSPlaygroundToggle' }
 
   -- LSP
   use 'neovim/nvim-lspconfig'
@@ -62,7 +62,6 @@ return packer.startup(function (use)
   -- Snip
   use 'L3MON4D3/LuaSnip'
   use 'saadparwaiz1/cmp_luasnip'
-
 
   -- Telescope
   use 'nvim-lua/popup.nvim'
@@ -84,10 +83,19 @@ return packer.startup(function (use)
   use 'folke/which-key.nvim'
 
   -- Focus
-  use 'folke/zen-mode.nvim'
+  use { 'folke/zen-mode.nvim', opt = true, cmd = 'ZenMode' }
 
   -- Formatting
-  use 'sbdchd/neoformat'
+  use { 'sbdchd/neoformat', opt = true, cmd = 'Neoformat' }
+
+  -- Markdown Preview
+  use {'iamcco/markdown-preview.nvim', run = 'cd app && npm install', cmd = 'MarkdownPreview'}
+
+  -- ()
+  use 'rstacruz/vim-closer'
+
+  -- --
+  use 'numToStr/Comment.nvim'
 
   if PACKER_BOOTSTRAP then
     require('packer').sync()
