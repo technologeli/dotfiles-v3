@@ -107,6 +107,14 @@ require'lspconfig'.cssls.setup {
   on_attach = on_attach,
 }
 
+local pid = vim.fn.getpid()
+local omnisharp_bin = "/home/eli/sources/omnisharp/run"
+require'lspconfig'.omnisharp.setup {
+  capabilities = capabilities,
+  on_attach = on_attach,
+  cmd = { omnisharp_bin, "--languageserver", "--hostPID", tostring(pid) };
+}
+
 --[[
 
 require'lspconfig'.bashls.setup {

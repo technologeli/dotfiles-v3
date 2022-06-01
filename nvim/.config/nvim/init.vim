@@ -12,12 +12,12 @@ autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
 
 call plug#begin('~/.local/share/nvim/plugged')
 
-" Theming
-Plug 'joshdick/onedark.vim'
+" Theme
 Plug 'morhetz/gruvbox'
+Plug 'tjdevries/colorbuddy.nvim'
 Plug 'nvim-lualine/lualine.nvim'
 Plug 'kyazdani42/nvim-web-devicons'
-Plug 'pantharshit00/vim-prisma'
+"Plug 'pantharshit00/vim-prisma'
 
 " Ex-treem
 Plug 'kyazdani42/nvim-tree.lua'
@@ -62,8 +62,7 @@ Plug 'ThePrimeagen/harpoon'
 " Binding bad
 Plug 'folke/which-key.nvim'
 
-" Vimwiki
-Plug 'vimwiki/vimwiki'
+" Focus
 Plug 'folke/zen-mode.nvim'
 
 " Formatting
@@ -72,5 +71,7 @@ Plug 'sbdchd/neoformat'
 call plug#end()
 
 let g:neoformat_try_node_exe = 1
+lua require'nvim-tree'.setup()
+NvimTreeResize 32
 
 let mapleader = ' '
