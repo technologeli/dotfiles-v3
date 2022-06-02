@@ -96,10 +96,12 @@ lspconfig.pyright.setup {
 
 lspconfig.vimls.setup {
   capabilities = capabilities,
+  on_attach = on_attach,
 }
 
 lspconfig.clangd.setup {
   capabilities = capabilities,
+  on_attach = on_attach,
 }
 
 lspconfig.gopls.setup {

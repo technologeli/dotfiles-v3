@@ -1,12 +1,8 @@
+local endswith = require('eli.utils').endswith
+
 local s = {}
 
 local n = 'scratch'
-
-local endswith = function(str, endstr)
-  local sl = string.len(str)
-  local el = string.len(endstr)
-  return string.sub(str, sl - el + 1, sl) == endstr
-end
 
 s.scratch = function ()
   -- if current buffer is scratch do nothing
