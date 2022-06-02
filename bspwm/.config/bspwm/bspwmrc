@@ -5,6 +5,8 @@ setxkbmap -option caps:none
 setxkbmap -option caps:ctrl_modifier
 
 # Autostart
+killall emacs
+emacs --daemon
 pgrep -x sxhkd > /dev/null || sxhkd &
 killall picom
 picom &

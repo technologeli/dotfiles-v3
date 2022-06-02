@@ -26,7 +26,7 @@ Print
 
 # Main Apps
 super + a; {b,d,k,e,v}
-  {firefox,discord,keepassxc,emacs,codium}
+  {firefox,discord,keepassxc,emacsclient -c,codium}
 super + a; s
   alacritty --class ncspot,ncspot -e ncspot
 # Games
