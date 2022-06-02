@@ -1,6 +1,6 @@
 configuration {
   modi: "window,drun,ssh,combi";
-  theme: "~/.config/rofi/themes/onedark.rasi";
   disable-history: true;
   terminal: "alacritty";
 }
+@theme "~/.config/rofi/themes/gruvbox.rasi"

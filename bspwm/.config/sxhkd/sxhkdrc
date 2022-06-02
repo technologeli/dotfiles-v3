@@ -38,7 +38,7 @@ super + a; {o,t,v,c}
 
 # Launcher
 super + @space
-  rofi -show drun -show-icons
+  rofi -show drun -show-icons -dpi 1
 super + ctrl + @space
   rofi -show run
 super + r
