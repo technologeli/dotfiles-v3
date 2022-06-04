@@ -32,6 +32,7 @@ bspc config normal_border_color      "#282828"
 bspc config borderless_monocle   true
 bspc config gapless_monocle      true
 
+bspc rule -a Emacs desktop='^1' follow=on focus=on state=tiled
 bspc rule -a KeePassXC desktop='^2' follow=on focus=on
 bspc rule -a Spotify desktop='^3' follow=on focus=on
 bspc rule -a ncspot desktop='^3' follow=on focus=on
@@ -43,7 +44,6 @@ bspc rule -a Alacritty desktop='^8' follow=on focus=on
 bspc rule -a VSCodium desktop='^8' follow=on focus=on
 bspc rule -a firefox desktop='^9' follow=on focus=on
 bspc rule -a Thunar desktop='^10' follow=on focus=on
-bspc rule -a Emacs desktop='^8' follow=on focus=on state=tiled
 
 # Wallpaper
 feh --bg-fill $HOME/Pictures/Wallpapers/gavin_odonnel/2.jpg

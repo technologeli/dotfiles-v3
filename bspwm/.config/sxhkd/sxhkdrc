@@ -28,7 +28,7 @@ Print
 super + a; {b,d,k,e,v}
   {firefox,discord,keepassxc,emacsclient -c,codium}
 super + a; s
-  alacritty --class ncspot,ncspot -e ncspot
+  spotify
 # Games
 super + a; {l,g}
   {lutris,steam}
@@ -65,8 +65,12 @@ super + {_,shift + }w
   bspc node -{c,k}
 
 # Change keyboard layout
-super + z
-  ~/dotfiles-v3/layout-switch.sh
+super + z; u
+  setxkbmap -layout us
+super + z; k
+  setxkbmap -layout kr
+super + z; i
+  setxkbmap -layout us -variant intl
 
 super + Escape; l
   light-locker-command -l
@@ -81,19 +85,22 @@ super + XF86AudioPlay
   ~/dotfiles-v3/rofi-change-output.sh
 
 XF86AudioMute
-  ~/dotfiles-v3/toggle-mute.sh
+  pamixer -t
+  #~/dotfiles-v3/toggle-mute.sh
 
 XF86AudioLowerVolume
-  ~/dotfiles-v3/change-volume.sh -5%
+  pamixer -d 5
+  #~/dotfiles-v3/change-volume.sh -5%
 
 XF86AudioRaiseVolume
-  ~/dotfiles-v3/change-volume.sh +5%
+  pamixer -i 5
+  #~/dotfiles-v3/change-volume.sh +5%
 
 XF86AudioPlay
   playerctl play-pause
 
 shift + XF86AudioPlay
-  playerctl play-pause -p ncspot
+  playerctl play-pause -p spotify
 
 ctrl + XF86AudioPlay
   playerctl play-pause -p firefox
@@ -106,6 +113,13 @@ XF86AudioNext
 
 XF86AudioPrev
   playerctl previous
+
+# brightness
+XF86MonBrightnessDown
+  xbacklight -dec 10
+
+XF86MonBrightnessUp
+  xbacklight -inc 10
 
 # Alternate between the tiled and monocle layout
 super + m
