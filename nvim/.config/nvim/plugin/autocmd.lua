@@ -12,7 +12,7 @@ ac('BufWritePre', {
 
 local langs = ag('langs', { clear = true })
 ac('FileType', {
-  pattern = { 'python', 'go' },
+  pattern = { 'python', 'go', 'cs' },
   callback = function ()
     bo.tabstop = 4
     bo.shiftwidth = 4
