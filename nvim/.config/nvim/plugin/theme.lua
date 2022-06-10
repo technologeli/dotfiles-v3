@@ -8,13 +8,15 @@ vim.cmd[[
 local has_colorbuddy, colorbuddy = pcall(require, 'colorbuddy')
 if has_colorbuddy then
   colorbuddy.colorscheme('gruvbox')
-  local Color, colors, Group, groups, styles = require('colorbuddy').setup()
+  local Color, colors, Group, _, styles = require('colorbuddy').setup()
 
   -- _ to not override
   Color.new('_cyan', '#458588')
   Color.new('_purple', '#b16286')
   Color.new('_yellow', '#d79921')
+  Color.new('_soft', '#3c3836')
 
+  -- fg, bg, style
   Group.new('Normal', nil, nil, nil)
 
   Group.new('Pmenu', nil, nil, nil)
@@ -26,6 +28,8 @@ if has_colorbuddy then
   Group.new('TelescopeBorder', colors._purple, nil, nil)
   Group.new('TelescopeMatching', colors._yellow, nil, nil)
   Group.new('TelescopePromptPrefix', colors._cyan, nil, nil)
+
+  Group.new('TreeSitterContext', nil, colors._soft, nil, nil)
 end
 
 

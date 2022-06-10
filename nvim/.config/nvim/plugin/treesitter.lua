@@ -18,3 +18,10 @@ require'nvim-treesitter.configs'.setup {
     additional_vim_regex_highlighting = false,
   },
 }
+
+local has_context, context = pcall(require, 'treesitter-context')
+if not has_context then
+  return
+end
+
+context.setup { }
