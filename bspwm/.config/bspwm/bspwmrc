@@ -1,5 +1,9 @@
 #! /bin/sh
-xrdb -merge ~/.Xresources
+
+# bspwm sxhkd picom lxpolkit light-locker dunst polybar rofi thunar
+# light-locker-gtk-greeter
+
+[[ -f ~/.Xresources ]] && xrdb -merge ~/.Xresources
 xsetroot -cursor_name left_ptr
 setxkbmap -option caps:none
 setxkbmap -option caps:ctrl_modifier
@@ -18,10 +22,13 @@ pgrep -x light-locker || light-locker &
 killall dunst 
 dunst &
 
-# Figure out a better way to do this
-# bspc monitor HDMI-0 -d 1 2 3 4 5
-# bspc monitor DP-4 -d 6 7 8 9 0
-bspc monitor eDP1 -d 1 2 3 4 5 6 7 8 9 0
+count=$(xrandr --query | grep " connected" | wc -l)
+if [ $count == 2]; then
+  bspc monitor HDMI-0 -d 1 2 3 4 5
+  bspc monitor DP-4 -d 6 7 8 9 0
+else
+  bspc monitor eDP1 -d 1 2 3 4 5 6 7 8 9 0
+fi
 
 
 bspc config border_width 4
