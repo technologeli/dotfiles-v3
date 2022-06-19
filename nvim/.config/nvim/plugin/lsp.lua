@@ -124,6 +124,11 @@ lspconfig.tailwindcss.setup {
   on_attach = on_attach,
 }
 
+lspconfig.rust_analyzer.setup {
+  capabilities = capabilities,
+  on_attach = on_attach,
+}
+
 local pid = vim.fn.getpid()
 local omnisharp_bin = "/home/eli/sources/omnisharp/run"
 lspconfig.omnisharp.setup {

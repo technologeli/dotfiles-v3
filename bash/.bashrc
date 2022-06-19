@@ -17,3 +17,5 @@ export HISTCONTROL=erasedups:ignorespace
 # Starship prompt!
 # https://starship.rs
 eval "$(starship init bash)"
+
+. "$HOME/.cargo/env"
