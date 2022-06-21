@@ -13,7 +13,7 @@ ac('BufWritePre', {
 local langs = ag('langs', { clear = true })
 ac('FileType', {
   pattern = { 'python', 'go', 'cs' },
-  callback = function ()
+  callback = function()
     bo.tabstop = 4
     bo.shiftwidth = 4
     bo.softtabstop = 4
@@ -27,10 +27,10 @@ if not has_harpoon then
   return
 end
 
-local harp= ag('harp', { clear = true })
+local harp = ag('harp', { clear = true })
 ac({ 'BufNewFile', 'BufReadPost', 'BufEnter' }, {
   pattern = '*',
-  callback = function ()
+  callback = function()
     local m = require('harpoon.mark').status()
     if m == '' then
       return m

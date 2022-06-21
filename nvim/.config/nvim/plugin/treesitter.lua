@@ -5,7 +5,7 @@ end
 
 require'nvim-treesitter.configs'.setup {
   ensure_installed = {
-    "typescript", "tsx", "html", "json", "yaml",
+    "typescript", "tsx", "html", "json", "yaml", "prisma",
     "bash", "lua",
     "python", "c", "cpp", "c_sharp", "go", "rust",
   },
